@@ -24,7 +24,7 @@ def get_fields():
         field = input("enter field name (or leave blank to finsih): ") # keep reading entries until empty 
         if not field: # loops through all entries 
             break
-        fields.append(field) # WHAT?
+        fields.append(field) # Adds all elements the user input into the array fields 
     return fields
 
 def read_record(id):
