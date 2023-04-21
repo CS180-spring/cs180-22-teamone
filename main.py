@@ -86,3 +86,6 @@ def main():
         
         elif choice == '6':
             break;
+
+if __name__ == '__main__':
+    main()
