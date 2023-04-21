@@ -6,20 +6,20 @@ import os
 DB_FILE_NAME = 'data.json'
 
 def create_record():
-    data = {}
-    data['id'] = input("Enter ID: ")
+    data = {} # This is a dictionary 
+    data['id'] = input("Enter ID: ")  # assign ID key to whatever the user inputs 
     
-    for field in get_fields():
+    for field in get_fields():   # calls get_Fields Function once and returns list 
         data[field] = input(f'Enter {field}: ')
         
-    with open(DB_FILE_NAME, 'r+') as file:
-        records = json.load(file)
-        records.append(data)
-        file.seek(0)
-        json.dump(records, file, indent=4)
+    with open(DB_FILE_NAME, 'r+') as file: # r+ gives permission to read and write 
+        records = json.load(file) # Preps and loads into memory  
+        records.append(data) # Go back to the top 
+        file.seek(0) # takes us to the very top  
+        json.dump(records, file, indent=4) # Here is where we write to json file  
 
 def get_fields():
-    fields = []
+    fields = [] # similar to an array 
     while True:
         field = input("enter field name (or leave blank to finsih): ")
         if not field:
@@ -36,9 +36,9 @@ def update_record(id):
 
 def delete_record():
     with open(DB_FILE_NAME, 'r+') as file:
-        records = json.load(file)
-        for i, record in enumerate(records):
-            if record['id'] == id:
+        records = json.load(file) # taking all the data from json file put into records 
+        for i, record in enumerate(records): # it will return index and object that it is pointing to 
+            if record['id'] == id: 
                 del records[i]
                 file.seek(0)
                 json.dump(records, file, indent=4)
