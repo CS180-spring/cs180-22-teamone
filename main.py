@@ -32,7 +32,17 @@ def read_record(id):
 
 
 def update_record(id):
-    pass
+    with open(DB_FILE_NAME, 'r+') as file:
+        records = json.load(file)
+        for i, record in enumerate(records):
+            if record['id'] == id:
+                for field in get_fields():
+                    record[field] = input(f'Enter new {field}: ')
+                records[i] = record
+                file.seek(0)
+                json.dump(records, file, indent=4)
+                return True
+        return False 
 
 def delete_record():
     with open(DB_FILE_NAME, 'r+') as file:
@@ -44,7 +54,6 @@ def delete_record():
                 json.dump(records, file, indent=4)
                 return True
         return False
-    pass
 
 def list_records():
     pass
