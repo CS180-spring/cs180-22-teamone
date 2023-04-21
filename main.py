@@ -10,7 +10,7 @@ def create_record():
     data['id'] = input("Enter ID: ")  # assign ID key to whatever the user inputs 
     
     for field in get_fields():   # calls get_Fields Function once and returns list 
-        data[field] = input(f'Enter {field}: ')
+        data[field] = input(f'Enter {field}: ') # This will print all fields then allow user to input data 
         
     with open(DB_FILE_NAME, 'r+') as file: # r+ gives permission to read and write 
         records = json.load(file) # Preps and loads into memory  
@@ -21,10 +21,15 @@ def create_record():
 def get_fields():
     fields = [] # similar to an array 
     while True:
+<<<<<<< HEAD
         field = input("enter field name (or leave blank to finish): ")
         if not field:
+=======
+        field = input("enter field name (or leave blank to finsih): ") # keep reading entries until empty 
+        if not field: # loops through all entries 
+>>>>>>> c6fc08cba410e94c71be9c121d54b887f5a02b1b
             break
-        field.append(field)
+        fields.append(field) # Adds all elements the user input into the array fields 
     return fields
 
 def read_record(id):
