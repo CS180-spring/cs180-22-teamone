@@ -35,6 +35,15 @@ def update_record(id):
     pass
 
 def delete_record():
+    with open(DB_FILE_NAME, 'r+') as file:
+        records = json.load(file)
+        for i, record in enumerate(records):
+            if record['id'] == id:
+                del records[i]
+                file.seek(0)
+                json.dump(records, file, indent=4)
+                return True
+        return False
     pass
 
 def list_records():
