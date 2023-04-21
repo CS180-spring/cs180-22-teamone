@@ -47,7 +47,10 @@ def delete_record():
     pass
 
 def list_records():
-    pass
+    with open(DB_FILE_NAME, 'r') as file:
+        records = json.load(file)
+        for record in records:
+            print(record)
 
 def main():
     if not os.path.exists(DB_FILE_NAME):
