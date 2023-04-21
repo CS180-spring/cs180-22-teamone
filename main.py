@@ -35,6 +35,15 @@ def update_record(id):
     pass
 
 def delete_record():
+    with open(DB_FILE_NAME, 'r+') as file:
+        records = json.load(file)
+        for i, record in enumerate(records):
+            if record['id'] == id:
+                del records[i]
+                file.seek(0)
+                json.dump(records, file, indent=4)
+                return True
+        return False
     pass
 
 def list_records():
@@ -44,8 +53,7 @@ def main():
     if not os.path.exists(DB_FILE_NAME):
         with open(DB_FILE_NAME, 'w') as file:
             json.dump([], file)
-    
-    
+            
     while True:
         print('\nMenu')
         print('1. Create record')
@@ -86,3 +94,4 @@ def main():
         
         elif choice == '6':
             break;
+
