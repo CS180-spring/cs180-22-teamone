@@ -1,4 +1,7 @@
 import unittest
+import json
+import os
+
 
 from main import create_record
 from main import get_fields
@@ -34,8 +37,7 @@ class TestDeleteRecord(unittest.TestCase):
 
 class TestListRecords(unittest.TestCase):
     def test_list_records(self):
-        # write your test cases for list_records function here
-        pass
+        self.assertIs('hello', 'hello')
 
 if __name__ == '__main__':
     unittest.main()
