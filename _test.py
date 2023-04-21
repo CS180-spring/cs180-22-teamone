@@ -8,12 +8,9 @@ from main import delete_record
 from main import list_records
 
 
-
 class TestCreateRecord(unittest.TestCase):
     def test_my_function(self):
-        #self.assertEqual(my_function(2), 4)
-        #self.assertEqual(my_function(0), 0)
-        #self.assertEqual(my_function(-1), -2)
+        
 
 
 class TestGetFields(unittest.TestCase):
