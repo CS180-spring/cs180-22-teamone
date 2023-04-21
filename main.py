@@ -21,7 +21,7 @@ def create_record():
 def get_fields():
     fields = [] # similar to an array 
     while True:
-        field = input("enter field name (or leave blank to finsih): ")
+        field = input("enter field name (or leave blank to finish): ")
         if not field:
             break
         field.append(field)
