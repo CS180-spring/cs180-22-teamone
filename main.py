@@ -28,12 +28,12 @@ def get_fields():
     return fields
 
 def read_record(id):
-    with open(DB_FILE_NAME, 'r') as file:
-        records = json.load(file)
-        for record in records:
-            if record['id'] == id:
+    with open(DB_FILE_NAME, 'r') as file: # Open the file with name "DB_FILE_NAME" in read mode and assing it to "file"
+        records = json.load(file) #load contents into python object using JSON decoding
+        for record in records:    
+            if record['id'] == id: #if ID matchets input ID return record
                 return record
-        return None
+        return None #if not return None
 
 
 def update_record(id):
