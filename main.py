@@ -21,10 +21,10 @@ def create_record():
 def get_fields():
     fields = [] # similar to an array 
     while True:
-        field = input("enter field name (or leave blank to finish): ")
+        field = input("enter field name (or leave blank to finish): ") # Keep prompting for field input until empty
         if not field:
             break
-        fields.append(field) # WHAT?
+        fields.append(field)
     return fields
 
 def read_record(id):
