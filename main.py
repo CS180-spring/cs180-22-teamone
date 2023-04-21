@@ -21,13 +21,8 @@ def create_record():
 def get_fields():
     fields = [] # similar to an array 
     while True:
-<<<<<<< HEAD
         field = input("enter field name (or leave blank to finish): ")
         if not field:
-=======
-        field = input("enter field name (or leave blank to finsih): ") # keep reading entries until empty 
-        if not field: # loops through all entries 
->>>>>>> c6fc08cba410e94c71be9c121d54b887f5a02b1b
             break
         fields.append(field) # Adds all elements the user input into the array fields 
     return fields
