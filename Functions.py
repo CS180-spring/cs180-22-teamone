@@ -1,33 +1,32 @@
-import json
-import os
-
-
+import json  # import the json module to work with JSON data
+import os   # import the os module for operating system dependent functionality
 
 # One file for now change this to allow for multiple files. 
-DB_FILE_NAME = 'data.json'
+DB_FILE_NAME = 'data.json'  # define the name of the file where records will be stored
 
 # Function to create records
 def create_record():
-    data = {} # This is a dictionary 
-    data['id'] = input("Enter ID: ")  # assign ID key to whatever the user inputs 
+    data = {}  # create an empty dictionary to store the data for a new record
+    data['id'] = input("Enter ID: ")  # prompt the user to input the ID for the new record and store it in the 'id' key of the dictionary
     
-    for field in get_fields():   # calls get_Fields Function once and returns list 
-        data[field] = input(f'Enter {field}: ') # This will print all fields then allow user to input data 
+    for field in get_fields():  # iterate over the fields returned by the get_fields function
+        data[field] = input(f'Enter {field}: ')  # prompt the user to input the data for each field and store it in the corresponding key of the dictionary
         
-    with open(DB_FILE_NAME, 'r+') as file: # r+ gives permission to read and write 
-        records = json.load(file) # Preps and loads into memory  
-        records.append(data) # Go back to the top 
-        file.seek(0) # takes us to the very top  
-        json.dump(records, file, indent=4) # Here is where we write to json file  
+    with open(DB_FILE_NAME, 'r+') as file:  # open the data file in read-write mode using a 'with' statement
+        records = json.load(file)  # load the existing records from the file into the 'records' list
+        records.append(data)  # add the new record (stored in the 'data' dictionary) to the 'records' list
+        file.seek(0)  # move the file pointer to the beginning of the file
+        json.dump(records, file, indent=4)  # write the updated records list to the file in JSON format with indentation
+ 
         
 def get_fields():
-    fields = [] # similar to an array 
+    fields = []  # create an empty list to store the field names
     while True:
-        field = input("enter field name (or leave blank to finish): ") # Keep prompting for field input until empty
+        field = input("enter field name (or leave blank to finish): ")  # prompt the user to input a field name or leave it blank to finish
         if not field:
-            break
-        fields.append(field)
-    return fields
+            break  # if the user leaves the field name blank, break out of the loop
+        fields.append(field)  # add the field name to the 'fields' list
+    return fields  # return the list of field names
 
 
 def read_record(id):
