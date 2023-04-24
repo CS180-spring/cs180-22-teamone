@@ -2,10 +2,17 @@ import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
 
 # One file for now change this to allow for multiple files. 
-DB_FILE_NAME = 'data.json'  # define the name of the file where records will be stored
+DB_FILE_NAME = ''  # define the name of the file where records will be stored
+EXISTING_DATA_BASES = []
+
+
 
 # Function to create records
 def create_record():
+    if len(DB_FILE_NAME) == 0:
+        print("Error: No DataBase Selected")
+        return 
+
     data = {}  # create an empty dictionary to store the data for a new record
     data['id'] = input("Enter ID: ")  # prompt the user to input the ID for the new record and store it in the 'id' key of the dictionary
     
@@ -67,3 +74,25 @@ def list_records():
         records = json.load(file)
         for record in records:
             print(record)
+
+def create_dataBase():
+    exit_loop = False
+    while not exit_loop:
+        new_file = input("Type name of new Data Base you want to create: ")
+        for file_name in EXISTING_DATA_BASES:
+            if new_file == file_name:
+                print("Sorry, this name is already in use, use another")
+                break
+        else:
+            exit_loop = True
+
+    with open("ExistingDataBases.txt", "w") as file:
+        file.write(new_file)
+
+    DB_FILE_NAME = new_file + '.json'
+    EXISTING_DATA_BASES.append(DB_FILE_NAME)
+    
+
+def choose_database():
+    
+    return 
