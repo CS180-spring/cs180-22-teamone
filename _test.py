@@ -8,13 +8,14 @@ from main import list_records
 
 class TestCreateRecord(unittest.TestCase):
     def test_create_record(self):
-        
         pass
+        
 
 class TestGetFields(unittest.TestCase):
     def test_get_fields(self):
         # write your test cases for get_fields function here
-        pass
+        result = get_fields()
+        self.assertGreater(len(result), 0)
 
 class TestReadRecord(unittest.TestCase):
     def test_read_record(self):
