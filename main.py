@@ -51,7 +51,7 @@ def update_record(id):
                 return True
         return False 
 
-def delete_record():
+def delete_record(id):
     with open(DB_FILE_NAME, 'r+') as file:
         records = json.load(file) # taking all the data from json file put into records 
         for i, record in enumerate(records): # it will return index and object that it is pointing to 

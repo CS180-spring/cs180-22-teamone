@@ -1,4 +1,4 @@
-import unittests
+import unittest
 from main import create_record
 from main import get_fields
 from main import read_record
@@ -29,7 +29,13 @@ class TestUpdateRecord(unittest.TestCase):
 class TestDeleteRecord(unittest.TestCase):
     def test_delete_record(self):
         # write your test cases for delete_record function here
-        pass
+        
+        # need to create a temp json file to test the function
+        with open("deletedMe.json" , "w") as tempFile:
+            tempFile.write('[{"id": 1, "name": "Steve", "age": 21}]')
+
+        result = delete_record(1)
+        self.assertTrue(result)
 
 class TestListRecords(unittest.TestCase):
     def test_list_records(self):
