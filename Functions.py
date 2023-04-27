@@ -9,6 +9,7 @@ EXISTING_DATA_BASES = []
 
 # Function to create records
 def create_record():
+    global DB_FILE_NAME
     print("Name of Current Data base: ", DB_FILE_NAME)
     if len(DB_FILE_NAME) == 0:
         print("Error: No DataBase Selected")
@@ -28,6 +29,7 @@ def create_record():
  
         
 def get_fields():
+    global DB_FILE_NAME
     fields = []  # create an empty list to store the field names
     while True:
         field = input("enter field name (or leave blank to finish): ")  # prompt the user to input a field name or leave it blank to finish
@@ -38,6 +40,7 @@ def get_fields():
 
 
 def read_record(id):
+    global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)
         for record in records:
@@ -47,6 +50,7 @@ def read_record(id):
 
 
 def update_record(id):
+    global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r+') as file:
         records = json.load(file)
         for i, record in enumerate(records):
@@ -60,6 +64,7 @@ def update_record(id):
         return False 
 
 def delete_record():
+    global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r+') as file:
         records = json.load(file) # taking all the data from json file put into records 
         for i, record in enumerate(records): # it will return index and object that it is pointing to 
@@ -71,20 +76,35 @@ def delete_record():
         return False
 
 def list_records():
+    global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)
         for record in records:
             print(record)
 
 def create_dataBase():
+    global DB_FILE_NAME, EXISTING_DATA_BASES
+    EXISTING_DATA_BASES.clear()
+
+    #We  clear then add all ements inside of EXISTING_DATA_BASES
+    with open("ExistingDataBases.txt", "r") as file:
+        file.seek(0)
+        for line in file:
+            EXISTING_DATA_BASES.append(line.strip())
+
+    # Temporary test file
+    for db in EXISTING_DATA_BASES:
+        print("DataBase: ", db)
+
     exit_loop = False
     while not exit_loop:
         new_file = input("Type name of new Data Base you want to create: ")    
-        if not new_file:
+        if not new_file: # Check if user typed nothing 
             print("Database not created")
             break
-        new_file = new_file + '.json'
-        for file_name in EXISTING_DATA_BASES:            
+        new_file = new_file + '.json' 
+        
+        for file_name in EXISTING_DATA_BASES: # Check if name already used           
             if new_file == file_name:
                 print("Sorry, this name is already in use, please use another")
                 break
@@ -94,18 +114,20 @@ def create_dataBase():
     with open("ExistingDataBases.txt", "w") as file:
         file.write(new_file)
     
-    #DB_FILE_NAME = new_file 
+    DB_FILE_NAME = new_file 
     with open(DB_FILE_NAME, 'w') as file:
         json.dump([], file)
     
     EXISTING_DATA_BASES.append(DB_FILE_NAME)
-
+    
     with open('ExistingDataBases.txt', 'w') as f:
         f.seek(0)
         for index in EXISTING_DATA_BASES:
-            f.write(index)
+            f.write(index + '\n')
+
 
 def current_database():
+    global DB_FILE_NAME
     temp = DB_FILE_NAME[:-5]
     print("Current Database: "+ temp) 
 
@@ -113,9 +135,9 @@ def current_database():
 def choose_database():
     global DB_FILE_NAME
     with open('ExistingDataBases.txt', 'r') as f:
-        for line in f:
-            print(line)
-   
+        for line_number, line in enumerate(f, start=1):
+            print(f"{line_number}: {line[:-6]}\n")
+    
     userInput = input("Type name of Database: ")
     #handle error for checking if data base exists later 
     DB_FILE_NAME = userInput + '.json'

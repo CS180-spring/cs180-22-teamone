@@ -4,13 +4,6 @@ from Functions import *
 
 
 def main():
-    '''
-    if not os.path.exists(DB_FILE_NAME):
-        with open(DB_FILE_NAME, 'w') as file:
-            json.dump([], file)
-    '''
-
-
     while True:
         print('\nMenu')
         print('1. Create a DataBase')
@@ -35,7 +28,7 @@ def main():
             choose_database()
 
         if choice == '4':          
-            create_record(DB_FILE_NAME)
+            create_record()
         
         elif choice == '5':
             id = input('Enter ID: ')
