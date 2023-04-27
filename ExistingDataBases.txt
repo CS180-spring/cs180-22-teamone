@@ -1,3 +1,0 @@
-temp.json
-food.json
-chair.json
