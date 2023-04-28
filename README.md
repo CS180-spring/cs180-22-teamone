@@ -45,8 +45,8 @@ The `main.py` file can act as an entry script. The file can be run in the IDE of
 
 ## Latest Features Added:
 ---
-    1. Create a DataBase: The user now has the ability to create brand new Databases. THis features additionaly checks  no duplicates exists and upon exiting the data is   saved inside of a txt file. 
-    2. Current Database: Upon exiting the program, all work done  
-    3. Choose Database: 
+    1. Create a DataBase: The user now has the ability to create brand new Databases. 
+    2. Current Database: This function will tell the user what databse they are currently inside of. 
+    3. Choose Database: Upon the user creating multiple data bases this function will print all existing database and allow the user to select one of their choosing. 
 
 
