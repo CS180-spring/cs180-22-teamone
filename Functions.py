@@ -150,9 +150,9 @@ def delete_database():
     with open("ExistingDataBases.txt", "r") as file:
         EXISTING_DATA_BASES = [line.strip() for line in file]
 
-    print("Before Deleting: ")
-    for db in EXISTING_DATA_BASES:
-        print(db)
+    #print("Before Deleting: ")
+    #for db in EXISTING_DATA_BASES:
+        #print(db)
 
     # delete the .json file
     temp = input("Type name of Database you want to delete: ")
@@ -164,9 +164,9 @@ def delete_database():
     else:
         print("Database does not exist")
 
-    print("After Deleting:")
-    for db in EXISTING_DATA_BASES:
-        print(db)
+   #print("After Deleting:")
+    #for db in EXISTING_DATA_BASES:
+     #   print(db)
 
     # update ExistingDataBases.txt
     with open("ExistingDataBases.txt", "w") as file:
