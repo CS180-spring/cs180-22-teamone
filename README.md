@@ -44,7 +44,7 @@ The `main.py` file can act as an entry script. The file can be run in the IDE of
 ![Burndown](https://github.com/CS180-spring/cs180-22-teamone/blob/main/images/Ideal%20Tasks%20Remaining%20and%20Actual%20Tasks%20Remaining-2.png?raw=true)
 
 ## Latest Features Added:
--- 
+---
     1. Create a DataBase: The user now has the ability to create brand new Databases. THis features additionaly checks  no duplicates exists and upon exiting the data is   saved inside of a txt file. 
     2. Current Database: Upon exiting the program, all work done  
     3. Choose Database: 
