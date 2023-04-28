@@ -68,3 +68,4 @@ def list_records():
         records = json.load(file)
         for record in records:
             print(record)
+    return records #purely for unit testing purposes. This should not affect the end user's performance
