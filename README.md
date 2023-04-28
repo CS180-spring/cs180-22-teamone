@@ -41,7 +41,7 @@ The `main.py` file can act as an entry script. The file can be run in the IDE of
 
 ## Burndown Chart: 
 ---
-![Burndown](images/Ideal Tasks Remaining and Actual Tasks Remaining-2.png)
+![Burndown](https://github.com/CS180-spring/cs180-22-teamone/blob/main/images/Ideal%20Tasks%20Remaining%20and%20Actual%20Tasks%20Remaining-2.png?raw=true)
 
 
 
