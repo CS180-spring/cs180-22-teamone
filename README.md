@@ -41,7 +41,7 @@ The `main.py` file can act as an entry script. The file can be run in the IDE of
 
 ## Burndown Chart: 
 ---
-![Burndown](images/Week1Burndown.png)
+![Burndown](images/Ideal Tasks Remaining and Actual Tasks Remaining-2.png)
 
 
 
