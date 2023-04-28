@@ -9,12 +9,13 @@ def main():
         print('1. Create a DataBase')
         print('2. Current Database')
         print('3. Choose Database')
-        print('4. Create record')
-        print('5. Read Record')
-        print('6. Update record')
-        print('7. Delete record')
-        print('8. List records')
-        print('9. Quit')
+        print('4. Delete Database')
+        print('5. Create record')
+        print('6. Read Record')
+        print('7. Update record')
+        print('8. Delete record')
+        print('9. List records')
+        print('10. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -28,9 +29,12 @@ def main():
             choose_database()
 
         if choice == '4':          
+            delete_database()
+
+        if choice == '5':          
             create_record()
         
-        elif choice == '5':
+        elif choice == '6':
             id = input('Enter ID: ')
             record = read_record(id)
             if record:
@@ -38,24 +42,24 @@ def main():
             else:
                 print('Record not found')
         
-        elif choice == '6':
+        elif choice == '7':
             id = input("Enter ID: ")
             if update_record(id):
                 print("Record updated")
             else:
                 print("Record not found")
         
-        elif choice == '7' :
+        elif choice == '8' :
             id = input("Enter ID: ")
             if delete_record(id):
                 print('Record deleted')
             else:
                 print("Record not found")
       
-        elif choice == '8':
+        elif choice == '9':
             list_records()
         
-        elif choice == '9':
+        elif choice == '10':
             break;
 
 if __name__ == '__main__':

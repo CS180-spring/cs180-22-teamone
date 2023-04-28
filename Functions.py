@@ -141,3 +141,38 @@ def choose_database():
     userInput = input("Type name of Database: ")
     #handle error for checking if data base exists later 
     DB_FILE_NAME = userInput + '.json'
+
+
+def delete_database():
+    global DB_FILE_NAME, EXISTING_DATA_BASES
+
+    # update EXISTING_DATA_BASES list variable
+    with open("ExistingDataBases.txt", "r") as file:
+        EXISTING_DATA_BASES = [line.strip() for line in file]
+
+    #print("Before Deleting: ")
+    #for db in EXISTING_DATA_BASES:
+        #print(db)
+
+    # delete the .json file
+    temp = input("Type name of Database you want to delete: ")
+    temp += ".json"
+    if temp in EXISTING_DATA_BASES:
+        EXISTING_DATA_BASES.remove(temp)
+        os.remove(temp)
+        print("Database successfully deleted")
+    else:
+        print("Database does not exist")
+
+   #print("After Deleting:")
+    #for db in EXISTING_DATA_BASES:
+     #   print(db)
+
+    # update ExistingDataBases.txt
+    with open("ExistingDataBases.txt", "w") as file:
+        for db in EXISTING_DATA_BASES:
+            file.write(db + "\n")
+
+
+
+
