@@ -1,93 +1,40 @@
 import json
 import os
+from Functions import *
 
-
-# One file for now change this to allow for multiple files. 
-DB_FILE_NAME = 'data.json'
-
-def create_record():
-    data = {} # This is a dictionary 
-    data['id'] = input("Enter ID: ")  # assign ID key to whatever the user inputs 
-    
-    for field in get_fields():   # calls get_Fields Function once and returns list 
-        data[field] = input(f'Enter {field}: ') # This will print all fields then allow user to input data 
-        
-    with open(DB_FILE_NAME, 'r+') as file: # r+ gives permission to read and write 
-        records = json.load(file) # Preps and loads into memory  
-        records.append(data) # Go back to the top 
-        file.seek(0) # takes us to the very top  
-        json.dump(records, file, indent=4) # Here is where we write to json file  
-
-def get_fields():
-    fields = [] # similar to an array 
-    while True:
-        field = input("enter field name (or leave blank to finish): ") # Keep prompting for field input until empty
-        if not field:
-            break
-
-        fields.append(field)
-
-    return fields
-
-def read_record(id):
-    with open(DB_FILE_NAME, 'r') as file:
-        records = json.load(file)
-        for record in records:
-            if record['id'] == id:
-                return record
-        return None
-
-
-def update_record(id):
-    with open(DB_FILE_NAME, 'r+') as file:
-        records = json.load(file)
-        for i, record in enumerate(records):
-            if record['id'] == id:
-                for field in get_fields():
-                    record[field] = input(f'Enter new {field}: ')
-                records[i] = record
-                file.seek(0)
-                json.dump(records, file, indent=4)
-                return True
-        return False 
-
-def delete_record(id):
-    with open(DB_FILE_NAME, 'r+') as file:
-        records = json.load(file) # taking all the data from json file put into records 
-        for i, record in enumerate(records): # it will return index and object that it is pointing to 
-            if record['id'] == id: 
-                del records[i]
-                file.seek(0)
-                json.dump(records, file, indent=4)
-                return True
-        return False
-
-def list_records():
-    with open(DB_FILE_NAME, 'r') as file:
-        records = json.load(file)
-        for record in records:
-            print(record)
 
 def main():
-    if not os.path.exists(DB_FILE_NAME):
-        with open(DB_FILE_NAME, 'w') as file:
-            json.dump([], file)
-            
     while True:
         print('\nMenu')
-        print('1. Create record')
-        print('2. Read Record')
-        print('3. Update record')
-        print('4. Delete record')
-        print('5. List records')
-        print('6. Quit')
+        print('1. Create a DataBase')
+        print('2. Current Database')
+        print('3. Choose Database')
+        print('4. Delete Database')
+        print('5. Create record')
+        print('6. Read Record')
+        print('7. Update record')
+        print('8. Delete record')
+        print('9. List records')
+        print('10. Quit')
         
-        choice = input('\Enter choice: ')
+        choice = input(' Enter choice: ')
         
         if choice == '1':
+            create_dataBase()
+
+        if choice == '2':
+            current_database()
+
+        if choice == '3':
+            choose_database()
+
+        if choice == '4':          
+            delete_database()
+
+        if choice == '5':          
             create_record()
         
-        elif choice == '2':
+        elif choice == '6':
             id = input('Enter ID: ')
             record = read_record(id)
             if record:
@@ -95,24 +42,28 @@ def main():
             else:
                 print('Record not found')
         
-        elif choice == '3':
+        elif choice == '7':
             id = input("Enter ID: ")
             if update_record(id):
                 print("Record updated")
             else:
                 print("Record not found")
         
-        elif choice == '4' :
+        elif choice == '8' :
             id = input("Enter ID: ")
             if delete_record(id):
                 print('Record deleted')
             else:
                 print("Record not found")
-        elif choice == '5':
+      
+        elif choice == '9':
             list_records()
         
-        elif choice == '6':
+        elif choice == '10':
             break;
 
 if __name__ == '__main__':
     main()
+
+
+
