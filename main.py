@@ -15,7 +15,8 @@ def main():
         print('7. Update record')
         print('8. Delete record')
         print('9. List records')
-        print('10. Quit')
+        print('10. Create Database from CSV')
+        print('11. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -60,6 +61,9 @@ def main():
             list_records()
         
         elif choice == '10':
+            create_databaseCSV()
+
+        elif choice == '11':
             break;
 
 if __name__ == '__main__':
