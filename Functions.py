@@ -197,13 +197,14 @@ def create_databaseCSV(): # option 10
             csvFile = fileName + '.csv'
             tempJson = fileName + '.json'
             # checks if files dont already exist in database
+            if len(EXISTING_DATA_BASES) == 0:
+                exitLoop = True
             for existingFiles in EXISTING_DATA_BASES:
                 if tempJson == existingFiles:
                     print("This CSV file has already been converted, pick another.")
                     break
-            
-            else:
-                exitLoop = True
+                else:
+                    exitLoop = True
 
     # checks if the CSV file exists in the OS directory
     if os.path.exists(csvFile):
