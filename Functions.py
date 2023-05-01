@@ -64,7 +64,7 @@ def update_record(id): # option 7
                 return True
         return False 
 
-def delete_record(): # option 8
+def delete_record(id): # option 8
     global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r+') as file:
         records = json.load(file) # taking all the data from json file put into records 
