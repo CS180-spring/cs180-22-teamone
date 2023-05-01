@@ -15,7 +15,8 @@ def main():
         print('7. Update record')
         print('8. Delete record')
         print('9. List records')
-        print('10. Quit')
+        print('10. Search Database')
+        print('11. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -60,7 +61,15 @@ def main():
             list_records()
         
         elif choice == '10':
-            break;
+            record = searchCurrentDatabase()
+            if record:
+                print(record)
+            else:
+                print("No Records Found")
+        
+        elif choice == '11':
+            
+            break
 
 if __name__ == '__main__':
     main()
