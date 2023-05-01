@@ -175,4 +175,21 @@ def delete_database():
 
 
 
+def searchCurrentDatabase():
+    key = input("Name of Value to search for: ")
+    value = input("Value to search for: ")
+    
+    foundRecords = []
+    
+    global DB_FILE_NAME
+    with open(DB_FILE_NAME, 'r') as file:
+        records = json.load(file)
+        for record in records:
+            if key in record and record[key] == value:
+                foundRecords.append(record)
+        return foundRecords
+    
 
+    
+    
+    
