@@ -63,7 +63,7 @@ def update_record(id):
                 return True
         return False 
 
-def delete_record():
+def delete_record(id):
     global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r+') as file:
         records = json.load(file) # taking all the data from json file put into records 
@@ -71,6 +71,7 @@ def delete_record():
             if record['id'] == id: 
                 del records[i]
                 file.seek(0)
+                file.truncate(0)
                 json.dump(records, file, indent=4)
                 return True
         return False
