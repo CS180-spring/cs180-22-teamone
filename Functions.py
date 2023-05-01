@@ -1,3 +1,4 @@
+import csv # import the CSV files
 import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
 
@@ -8,7 +9,7 @@ EXISTING_DATA_BASES = []
 
 
 # Function to create records
-def create_record():
+def create_record(): # option 5
     global DB_FILE_NAME
     print("Name of Current Data base: ", DB_FILE_NAME)
     if len(DB_FILE_NAME) == 0:
@@ -39,7 +40,7 @@ def get_fields():
     return fields  # return the list of field names
 
 
-def read_record(id):
+def read_record(id): # option 6
     global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)
@@ -49,7 +50,7 @@ def read_record(id):
         return None
 
 
-def update_record(id):
+def update_record(id): # option 7
     global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r+') as file:
         records = json.load(file)
@@ -63,7 +64,7 @@ def update_record(id):
                 return True
         return False 
 
-def delete_record(id):
+def delete_record(id): # option 8
     global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r+') as file:
         records = json.load(file) # taking all the data from json file put into records 
@@ -76,18 +77,18 @@ def delete_record(id):
                 return True
         return False
 
-def list_records():
+def list_records(): # option 9
     global DB_FILE_NAME
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)
         for record in records:
             print(record)
 
-def create_dataBase():
+def create_dataBase(): # option 1
     global DB_FILE_NAME, EXISTING_DATA_BASES
     EXISTING_DATA_BASES.clear()
 
-    #We  clear then add all ements inside of EXISTING_DATA_BASES
+    #We  clear then add all elements inside of EXISTING_DATA_BASES
     with open("ExistingDataBases.txt", "r") as file:
         file.seek(0)
         for line in file:
@@ -127,13 +128,13 @@ def create_dataBase():
             f.write(index + '\n')
 
 
-def current_database():
+def current_database(): # option 2
     global DB_FILE_NAME
     temp = DB_FILE_NAME[:-5]
     print("Current Database: "+ temp) 
 
 
-def choose_database():
+def choose_database(): # option 3
     global DB_FILE_NAME
     with open('ExistingDataBases.txt', 'r') as f:
         for line_number, line in enumerate(f, start=1):
@@ -144,7 +145,7 @@ def choose_database():
     DB_FILE_NAME = userInput + '.json'
 
 
-def delete_database():
+def delete_database(): # option 4
     global DB_FILE_NAME, EXISTING_DATA_BASES
 
     # update EXISTING_DATA_BASES list variable
@@ -174,8 +175,75 @@ def delete_database():
         for db in EXISTING_DATA_BASES:
             file.write(db + "\n")
 
+def create_databaseCSV(): # option 10
+    global DB_FILE_NAME, EXISTING_DATA_BASES
 
+    EXISTING_DATA_BASES.clear()
 
+    #We  clear then add all elements inside of EXISTING_DATA_BASES
+    with open("ExistingDataBases.txt", "r") as file:
+        file.seek(0)
+        for line in file:
+            EXISTING_DATA_BASES.append(line.strip())
+
+    # gets user input to the CSV file
+    exitLoop = False
+    while not exitLoop:
+        fileName = input("Enter CSV file: ") 
+        if not fileName: # checks for no input
+            print("Database not created")
+        # csvFile = fileName + '.csv'
+        # tempJson = fileName + '.json'
+        else:
+            csvFile = fileName + '.csv'
+            tempJson = fileName + '.json'
+            # checks if files dont already exist in database
+            if len(EXISTING_DATA_BASES) == 0:
+                exitLoop = True
+            for existingFiles in EXISTING_DATA_BASES:
+                if tempJson == existingFiles:
+                    print("This CSV file has already been converted, pick another.")
+                    break
+                else:
+                    exitLoop = True
+
+    # checks if the CSV file exists in the OS directory
+    if os.path.exists(csvFile):
+
+        # open and read the current CSV file 
+        with open(csvFile, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+
+            # create empty list for data population from CSV file
+            csvData = []
+
+            # adds each row from CSV to list
+            for eachRow in csv_reader:
+                csvData.append(eachRow)
+
+            # writes the list to the json file
+            jsonFile = fileName + ".json"
+            with open(jsonFile, 'w') as json_file:
+                json.dump(csvData, json_file, indent=4)
+        
+
+        with open("ExistingDataBases.txt", "w") as file:
+            file.write(jsonFile)
+        
+        # DB_FILE_NAME = jsonFile 
+        # with open(DB_FILE_NAME, 'w') as file:
+        #     json.dump([], file)
+        
+        EXISTING_DATA_BASES.append(jsonFile)
+    
+        with open('ExistingDataBases.txt', 'w') as f:
+            f.seek(0)
+            for index in EXISTING_DATA_BASES:
+                f.write(index + '\n')
+
+    else:
+        print("CSV File does not exist!")
+        
 def searchCurrentDatabase():
     key = input("Name of Value to search for: ")
     value = input("Value to search for: ")
@@ -189,8 +257,3 @@ def searchCurrentDatabase():
             if key in record and record[key] == value:
                 foundRecords.append(record)
         return foundRecords
-    
-
-    
-    
-    
