@@ -16,7 +16,8 @@ def main():
         print('8. Delete record')
         print('9. List records')
         print('10. Create Database from CSV')
-        print('11. Quit')
+        print('11. Search Database')
+        print('12. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -64,7 +65,15 @@ def main():
             create_databaseCSV()
 
         elif choice == '11':
-            break;
+            record = searchCurrentDatabase()
+            if record:
+                print(record)
+            else:
+                print("No Records Found")
+        
+        elif choice == '12':
+            
+            break
 
 if __name__ == '__main__':
     main()

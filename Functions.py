@@ -72,6 +72,7 @@ def delete_record(id): # option 8
             if record['id'] == id: 
                 del records[i]
                 file.seek(0)
+                file.truncate(0)
                 json.dump(records, file, indent=4)
                 return True
         return False
@@ -242,3 +243,17 @@ def create_databaseCSV(): # option 10
 
     else:
         print("CSV File does not exist!")
+        
+def searchCurrentDatabase():
+    key = input("Name of Value to search for: ")
+    value = input("Value to search for: ")
+    
+    foundRecords = []
+    
+    global DB_FILE_NAME
+    with open(DB_FILE_NAME, 'r') as file:
+        records = json.load(file)
+        for record in records:
+            if key in record and record[key] == value:
+                foundRecords.append(record)
+        return foundRecords
