@@ -243,7 +243,8 @@ def create_databaseCSV(): # option 10
 
     else:
         print("CSV File does not exist!")
-        
+ 
+       
 def searchCurrentDatabase():
     key = input("Name of Value to search for: ")
     value = input("Value to search for: ")
@@ -257,3 +258,23 @@ def searchCurrentDatabase():
             if key in record and record[key] == value:
                 foundRecords.append(record)
         return foundRecords
+    
+def searchThroughAllDatabases():
+    AllRecords = []
+    
+    key = input("Name of Value to search for: ")
+    value = input("Value to search for: ")
+    
+    with open("ExistingDataBases.txt", "r") as file:
+        file.seek(0)
+        for line in file:
+            EXISTING_DATA_BASES.append(line.strip())
+    for i, filename in enumerate(EXISTING_DATA_BASES):
+        with open(filename, 'r') as file:
+            records = json.load(file)
+            for record in records:
+                if key in record and record[key] == value:
+                    AllRecords.append(record)
+    return AllRecords 
+                    
+    

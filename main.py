@@ -17,7 +17,8 @@ def main():
         print('9. List records')
         print('10. Create Database from CSV')
         print('11. Search Database')
-        print('12. Quit')
+        print('12. Search All Databases')
+        print('13. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -69,9 +70,16 @@ def main():
             if record:
                 print(record)
             else:
-                print("No Records Found")
+                print("No Records Found!")
+
+        elif choice =='12':
+            record = searchThroughAllDatabases()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
         
-        elif choice == '12':
+        elif choice == '13':
             
             break
 
