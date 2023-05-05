@@ -1,6 +1,6 @@
-import json
 import os
-
+import json
+from prettytable import PrettyTable
 
 # One file for now change this to allow for multiple files. 
 DB_FILE_NAME = 'data.json'
@@ -66,6 +66,20 @@ def list_records():
         for record in records:
             print(record)
 
+def display_table():
+    with open(DB_FILE_NAME, 'r') as file:
+        records = json.load(file)
+        table = PrettyTable(['ID', 'Name', 'Age', 'Major'])
+        for row in records:
+            table.add_row([row.get('id', 'N/A'), row.get('Name', 'N/A'), row.get('Age', 'N/A'), row.get('Major', 'N/A')])
+        print(table)
+
+
+
+
+
+
+
 def main():
     if not os.path.exists(DB_FILE_NAME):
         with open(DB_FILE_NAME, 'w') as file:
@@ -79,7 +93,7 @@ def main():
         print('4. Delete record')
         print('5. List records')
         print('6. Quit')
-        
+        print('14. Display Table')
         choice = input('\Enter choice: ')
         
         if choice == '1':
@@ -111,6 +125,10 @@ def main():
         
         elif choice == '6':
             break;
+        elif choice == '14':
+            display_table()
+
+        
 
 if __name__ == '__main__':
     main()
