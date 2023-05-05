@@ -43,8 +43,34 @@ class TestDeleteRecord(unittest.TestCase):
         self.assertTrue(result)
 
 class TestListRecords(unittest.TestCase):
+    
     def test_list_records(self):
-        self.assertIs('hello', 'hello')
+        DB_FILE_NAME = 'data.json' #creates a dummy test file
+
+        data = { #defines the data set to put into the dummy test file
+            "Name" : "Brandon",
+            'Age' : 21,
+            'Major' : 'CHEN'    
+                }
+        
+        #expectedResult = json.dumps(data)
+        #ideally, #50 would be used to save the expected result to compare for later
+        #but I am running into issues with quotation marks
+
+        with open(DB_FILE_NAME, 'w') as file: #opening with 'w' ACTUALLY creates the test file
+            json.dump(data, file) #dumps data set into file
+
+        with open(DB_FILE_NAME, 'r') as file:
+            expectedResult = json.load(file) #reads data set immediately after to save expectedResult
+
+        self.assertEqual(list_records(), expectedResult) #checks
+
+#-------CREDIT TO CHATGPT for explaining the concept of removing files to Brandon Nguyen------------------------------
+        if 'file' in locals() or 'file' in globals():   #checks to see if file is open in memory
+            file.close()
+        
+        os.remove(DB_FILE_NAME) #removes it since unit test is over.
+
 
 if __name__ == '__main__':
     unittest.main()

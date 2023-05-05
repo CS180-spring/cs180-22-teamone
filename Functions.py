@@ -83,6 +83,7 @@ def list_records(): # option 9
         records = json.load(file)
         for record in records:
             print(record)
+    return records #purely for unit testing purposes. This should not affect the end user's performance
 
 def create_dataBase(): # option 1
     global DB_FILE_NAME, EXISTING_DATA_BASES
