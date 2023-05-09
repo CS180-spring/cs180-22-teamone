@@ -15,10 +15,11 @@ def main():
         print('7. Update record')
         print('8. Delete record')
         print('9. List records')
-        print('10. Create Database from CSV')
-        print('11. Search Database')
-        print('12. Search All Databases')
-        print('13. Quit')
+        print ('10. List by field')
+        print('11. Create Database from CSV')
+        print('12. Search Database')
+        print('13. Search All Databases')
+        print('14. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -62,24 +63,28 @@ def main():
         elif choice == '9':
             list_records()
         
-        elif choice == '10':
-            create_databaseCSV()
+        elif choice =='10':
+            listField()
 
         elif choice == '11':
+            create_databaseCSV()
+
+        elif choice == '12':
             record = searchCurrentDatabase()
             if record:
                 print(record)
             else:
                 print("No Records Found!")
 
-        elif choice =='12':
+        elif choice =='13':
             record = searchThroughAllDatabases()
             if record:
                 print(record)
             else:
                 print("No Records Found!")
         
-        elif choice == '13':
+        
+        elif choice == '14':
             
             break
 

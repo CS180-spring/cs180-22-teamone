@@ -137,13 +137,26 @@ def current_database(): # option 2
 
 def choose_database(): # option 3
     global DB_FILE_NAME
+    # Print all Data Bases Currently Created 
     with open('ExistingDataBases.txt', 'r') as f:
         for line_number, line in enumerate(f, start=1):
             print(f"{line_number}: {line[:-6]}\n")
     
     userInput = input("Type name of Database: ")
-    #handle error for checking if data base exists later 
-    DB_FILE_NAME = userInput + '.json'
+    userInput += '.json'
+    found = False
+
+    #check if there is a data base the user input exists or not 
+    with open('ExistingDataBases.txt', 'r') as f:
+        for line in f.readlines():
+            if userInput == line.strip():
+                found = True
+
+    if not found: 
+         print(f"Error: No DataBase under the name {userInput[:-5]} was found")
+         return
+    
+    DB_FILE_NAME = userInput
 
 
 def delete_database(): # option 4
@@ -152,10 +165,6 @@ def delete_database(): # option 4
     # update EXISTING_DATA_BASES list variable
     with open("ExistingDataBases.txt", "r") as file:
         EXISTING_DATA_BASES = [line.strip() for line in file]
-
-    #print("Before Deleting: ")
-    #for db in EXISTING_DATA_BASES:
-        #print(db)
 
     # delete the .json file
     temp = input("Type name of Database you want to delete: ")
@@ -167,11 +176,6 @@ def delete_database(): # option 4
     else:
         print("Database does not exist")
 
-   #print("After Deleting:")
-    #for db in EXISTING_DATA_BASES:
-     #   print(db)
-
-    # update ExistingDataBases.txt
     with open("ExistingDataBases.txt", "w") as file:
         for db in EXISTING_DATA_BASES:
             file.write(db + "\n")
@@ -278,4 +282,33 @@ def searchThroughAllDatabases():
                     AllRecords.append(record)
     return AllRecords 
                     
+
+def listField():
+    global DB_FILE_NAME
+    
+    if len(DB_FILE_NAME) == 0:
+        print("Error: No Databse Selected")
+        return
+    found = False
+
+    print("This functions to show all data on some specfied Field in your Data Base")
+    userInput = input("Insert Field: ")
+    
+    with open(DB_FILE_NAME, 'r') as file:
+        records = json.load(file)
+        for record in records:
+            if userInput in record:
+                print(userInput,": ",record[userInput])
+                found = True
+            
+    if not found: 
+         print(f"No data under the field name {userInput} was found")
+
+        
+                
+
+
+
+
+
     
