@@ -249,6 +249,25 @@ def create_databaseCSV(): # option 10
     else:
         print("CSV File does not exist!")
  
+
+def export_databaseCSV():
+    global DB_FILE_NAME, EXISTING_DATA_BASES
+    with open(DB_FILE_NAME, 'r') as file:  #loads current database into data array
+        data = json.load(file)
+    filename = DB_FILE_NAME[:-5]   #finds name of file (removes the .json part of the string)
+    filename = filename + '.csv'   #appends .csv to make the file a .csv
+
+    if os.path.exists(filename):  #if a file already exists, engage duplicate protocol
+        filename = filename[:-4]   #removes .csv
+        filename = filename + '(1).csv'  #adds (1) to the end. Would like to add functionality to increment a counter instead of just appending (1) all the time but oh well)
+     
+    with open(filename, 'w', newline='') as file: #creates a new csv file with name
+        writer = csv.writer(file)
+        writer.writerow(data[0].keys()) #writes in the keys as the header
+        for row in data:
+            writer.writerow(row.values()) #writes in the rows as data
+    print('Database successfully exported. Check filepath for CSV') #visual confirmation for user
+
        
 def searchCurrentDatabase():
     key = input("Name of Value to search for: ")
@@ -287,7 +306,7 @@ def listField():
     global DB_FILE_NAME
     
     if len(DB_FILE_NAME) == 0:
-        print("Error: No Databse Selected")
+        print("Error: No Database Selected")
         return
     found = False
 
