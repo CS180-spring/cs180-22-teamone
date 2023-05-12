@@ -251,7 +251,13 @@ def create_databaseCSV(): # option 10
  
 
 def export_databaseCSV():
-    global DB_FILE_NAME, EXISTING_DATA_BASES
+    global DB_FILE_NAME
+
+    if len(DB_FILE_NAME) == 0:
+        print('Database not selected. Please choose one before exporting')
+        raise Exception('Database not selected. Please choose one before exporting')
+ 
+        
     with open(DB_FILE_NAME, 'r') as file:  #loads current database into data array
         data = json.load(file)
     filename = DB_FILE_NAME[:-5]   #finds name of file (removes the .json part of the string)
