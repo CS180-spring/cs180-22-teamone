@@ -40,8 +40,8 @@
 The `main.py` file can act as an entry script. The file can be run in the IDE of your choice, in a text editor like VSCode(using extension like code runner) or it can be ran in a terminaly buy using the command `python main.py`
 
 ## Burndown Chart: 
----
-![Burndown](https://github.com/CS180-spring/cs180-22-teamone/blob/main/images/BurnDownWeek3.png?raw=true)
+
+![burnchart](https://github.com/CS180-spring/cs180-22-teamone/assets/100899925/58546104-6d1b-413c-a046-7bbffa54ebba)
 
 ## Latest Features Added:
 ---
