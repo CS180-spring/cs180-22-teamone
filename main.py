@@ -18,7 +18,9 @@ def main():
         print('10. Create Database from CSV')
         print('11. Search Database')
         print('12. Search All Databases')
-        print('13. Quit')
+        print('13. Search json file using keyword')
+        print('14. Sort a database')
+        print('15. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -80,6 +82,16 @@ def main():
                 print("No Records Found!")
         
         elif choice == '13':
+            fileFound = searchJsonFile()
+            if fileFound:
+                print("File found with keyword in:", fileFound)
+            else:
+                print("File not found with keyword, try another.")
+
+        elif choice == '14':
+            sortDatabase()
+
+        elif choice == '15':
             
             break
 

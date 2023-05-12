@@ -276,6 +276,40 @@ def searchThroughAllDatabases():
             for record in records:
                 if key in record and record[key] == value:
                     AllRecords.append(record)
-    return AllRecords 
-                    
+    return AllRecords
+
+def searchJsonFile():
+    keyWord = input("Enter the keyword to search thru all json files: ")
+    # print(EXISTING_DATA_BASES)
+    for jsonFile in EXISTING_DATA_BASES:
+        with open(jsonFile, 'r') as file:
+            jsonData = json.load(file)
+            if keyWord in json.dumps(jsonData):
+                return jsonFile
+    return None
+
+def sortDatabase():
+    if len(EXISTING_DATA_BASES) == 0:
+        return
+
+    for existingFiles in EXISTING_DATA_BASES:
+        # existingFiles = existingFiles - ".json"
+        print ("These are the existing databases:", existingFiles)
+
+    userFile = input("Which database will you like to sort? ")
+    userFile = userFile + ".json"
+
+    with open(userFile, 'r') as file:
+        jsonData = json.load(file)
+
+    if jsonData:
+        fileKeys = list(jsonData[0].keys())
+        keyStrings = ', ' .join(fileKeys)
+        print("These are the available keys.", keyStrings)
+        userKey = input("Pick a key to modify/sort: ")
+
+    sortedData = sorted(jsonData, key=lambda x: x[userKey])
+
+    with open(userFile, 'w',) as sortedFile:
+        json.dump(sortedData, sortedFile, indent=4)
     
