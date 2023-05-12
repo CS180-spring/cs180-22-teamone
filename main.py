@@ -1,6 +1,7 @@
 import json
 import os
 from Functions import *
+from prettytable import prettytable
 
 
 def main():
@@ -85,6 +86,7 @@ def main():
         
         
         elif choice == '14':
+            display_table()
             
             break
 
