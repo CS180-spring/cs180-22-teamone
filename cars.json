@@ -1,0 +1,62 @@
+[
+    {
+        "id": "Toyota",
+        "Make": "Toyota",
+        "Model": "Camry",
+        "Year": "2016"
+    },
+    {
+        "id": "Honda",
+        "Make": "Honda",
+        "Model": "Accord",
+        "Year": "2019"
+    },
+    {
+        "id": "Nissan",
+        "Make": "Nissan",
+        "Model": "Altima",
+        "Year": "2018"
+    },
+    {
+        "id": "Ford",
+        "Make": "Ford",
+        "Model": "Fusion",
+        "Year": "2015"
+    },
+    {
+        "id": "Chevrolet",
+        "Make": "Chevrolet",
+        "Model": "Cruze",
+        "Year": "2017"
+    },
+    {
+        "id": "Hyundai",
+        "Make": "Hyundai",
+        "Model": "Sonata",
+        "Year": "2014"
+    },
+    {
+        "id": "Kia",
+        "Make": "Kia",
+        "Model": "Optima",
+        "Year": "2019"
+    },
+    {
+        "id": "Mazda",
+        "Make": "Mazda",
+        "Model": "Mazda6",
+        "Year": "2017"
+    },
+    {
+        "id": "Subaru",
+        "Make": "Subaru",
+        "Model": "Legacy",
+        "Year": "2015"
+    },
+    {
+        "id": "Volkswagen",
+        "Make": "Volkswagen",
+        "Model": "Passat",
+        "Year": "2018"
+    }
+]
