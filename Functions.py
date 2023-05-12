@@ -1,9 +1,7 @@
-from prettytable import prettytable
-
 import csv # import the CSV files
 import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
-
+from prettytable import prettytable
 
 
 # One file for now change this to allow for multiple files. 
@@ -316,7 +314,7 @@ def listField():
 def display_table():
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)
-        table = PrettyTable(['ID', 'Name', 'Age', 'Major'])
+        table = prettytable(['ID', 'Name', 'Age', 'Major'])
         for row in records:
             table.add_row([row.get('id', 'N/A'), row.get('Name', 'N/A'), row.get('Age', 'N/A'), row.get('Major', 'N/A')])
         print(table)
