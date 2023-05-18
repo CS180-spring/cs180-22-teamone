@@ -18,9 +18,11 @@ def main():
         print('9. List records')
         print ('10. List by field')
         print('11. Create Database from CSV')
-        print('12. Search Database')
-        print('13. Search All Databases')
-        print('14. Quit')
+        print('12. Export Current Database to CSV')
+        print('13. Search Database')
+        print('14. Search All Databases')
+        print('15. Display Table')
+        print('16. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -71,23 +73,26 @@ def main():
             create_databaseCSV()
 
         elif choice == '12':
+            export_databaseCSV()
+
+        elif choice == '13':
             record = searchCurrentDatabase()
             if record:
                 print(record)
             else:
                 print("No Records Found!")
 
-        elif choice =='13':
+        elif choice =='14':
             record = searchThroughAllDatabases()
             if record:
                 print(record)
             else:
                 print("No Records Found!")
         
-        
-        elif choice == '14':
+        elif choice == '15':
             display_table()
-            
+      
+        elif choice == '16':
             break
 
 if __name__ == '__main__':
