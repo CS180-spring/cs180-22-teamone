@@ -1,6 +1,8 @@
 import csv # import the CSV files
 import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
+from prettytable import prettytable
+
 
 # One file for now change this to allow for multiple files. 
 DB_FILE_NAME = ''  # define the name of the file where records will be stored
@@ -70,11 +72,15 @@ def delete_record(id): # option 8
         records = json.load(file) # taking all the data from json file put into records 
         for i, record in enumerate(records): # it will return index and object that it is pointing to 
             if record['id'] == id: 
-                del records[i]
-                file.seek(0)
-                file.truncate(0)
-                json.dump(records, file, indent=4)
-                return True
+                confirm = input(f"Are you sure you want to delete the record with ID '{id}'? (y/n): ")
+                if confirm.lower() == 'y':
+                    del records[i]
+                    file.seek(0)
+                    file.truncate(0)
+                    json.dump(records, file, indent=4)
+                    return True
+                else:
+                    return False
         return False
 
 def list_records(): # option 9
@@ -312,7 +318,7 @@ def listField():
     global DB_FILE_NAME
     
     if len(DB_FILE_NAME) == 0:
-        print("Error: No Database Selected")
+        print("Error: No Databse Selected")
         return
     found = False
 
@@ -329,11 +335,11 @@ def listField():
     if not found: 
          print(f"No data under the field name {userInput} was found")
 
-        
-                
-
-
-
-
-
     
+def display_table():
+    with open(DB_FILE_NAME, 'r') as file:
+        records = json.load(file)
+        table = prettytable(['ID', 'Name', 'Age', 'Major'])
+        for row in records:
+            table.add_row([row.get('id', 'N/A'), row.get('Name', 'N/A'), row.get('Age', 'N/A'), row.get('Major', 'N/A')])
+        print(table)

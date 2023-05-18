@@ -1,6 +1,7 @@
 import json
 import os
 from Functions import *
+from prettytable import prettytable
 
 
 def main():
@@ -20,7 +21,8 @@ def main():
         print('12. Export Current Database to CSV')
         print('13. Search Database')
         print('14. Search All Databases')
-        print('15. Quit')
+        print('15. Display Table')
+        print('16. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -87,13 +89,12 @@ def main():
             else:
                 print("No Records Found!")
         
-        
         elif choice == '15':
-            
+            display_table()
+      
+        elif choice == '16':
             break
 
 if __name__ == '__main__':
     main()
-
-
 
