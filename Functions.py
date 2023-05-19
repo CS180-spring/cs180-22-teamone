@@ -1,7 +1,8 @@
 import csv # import the CSV files
 import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
-from prettytable import prettytable
+from prettytable import PrettyTable
+import hashlib
 
 
 # One file for now change this to allow for multiple files. 
@@ -336,10 +337,172 @@ def listField():
          print(f"No data under the field name {userInput} was found")
 
     
-def display_table():
-    with open(DB_FILE_NAME, 'r') as file:
-        records = json.load(file)
-        table = prettytable(['ID', 'Name', 'Age', 'Major'])
-        for row in records:
-            table.add_row([row.get('id', 'N/A'), row.get('Name', 'N/A'), row.get('Age', 'N/A'), row.get('Major', 'N/A')])
-        print(table)
+def hash_password(password):
+    sha_signature = hashlib.sha256(password.encode()).hexdigest()
+    return sha_signature
+
+def save_users(users):
+    with open('users.json', 'w') as f:
+        json.dump(users, f)
+
+def load_users():
+    if os.path.isfile('users.json'):
+        with open('users.json', 'r') as f:
+            users = json.load(f)
+    else:
+        users = {}
+    return users
+
+def displayMenu(users):
+    print("LOGIN MENU")
+    print("1. Create User\n")
+    print("2. Log In\n")
+    print("3. Reset Password\n")
+    print("4. Exit")
+    choice = input("Please Select your option: ")
+
+    if (choice == "1"):
+        username = input("Username: ")
+
+        if username in users:
+            print("\nUsername Already Exists!\n")
+        else:
+            password = hash_password(input("Password: "))
+            security_questions = getSecurityQuestions()
+            users[username] = {'password': password, 'security_questions': security_questions}
+            print("User Created!")
+            save_users(users)
+
+    elif (choice == "2"):
+        username = input("Enter Username: ")
+        password = hash_password(input("Enter Password: "))
+
+        if username in users and users[username]['password'] == password:
+            print("\nLogin Successful\n")
+            mainMenu()
+        else:
+            print("\nUser Doesn't Exist // Wrong Password\n")
+
+    elif (choice == "3"):
+        username = input("Enter Username: ")
+        if username in users:
+            if validateSecurityQuestions(users[username]['security_questions']):
+                new_password = hash_password(input("Enter new password: "))
+                users[username]['password'] = new_password
+                print("Password has been reset!")
+                save_users(users)
+            else:
+                print("\nSecurity Question Validation Failed!\n")
+        else:
+            print("\nUser Doesn't Exist\n")
+
+    elif (choice == "4"):
+        exit()
+
+
+def getSecurityQuestions():
+    questions = [
+        "Security Question 1: Where were you born?",
+        "Security Question 2: What is your favorite meal?",
+        "Security Question 3: What city did your parents meet?"
+    ]
+    answers = {}
+    for question in questions:
+        answers[question] = input(question + ': ')
+    return answers
+
+def validateSecurityQuestions(security_questions):
+    for question, answer in security_questions.items():
+        user_answer = input(question + ': ')
+        if user_answer != answer:
+            return False
+    return True
+
+def mainMenu():
+    while True:
+        print('\nMenu')
+        print('1. Create a DataBase')
+        print('2. Current Database')
+        print('3. Choose Database')
+        print('4. Delete Database')
+        print('5. Create record')
+        print('6. Read Record')
+        print('7. Update record')
+        print('8. Delete record')
+        print('9. List records')
+        print ('10. List by field')
+        print('11. Create Database from CSV')
+        print('12. Export Current Database to CSV')
+        print('13. Search Database')
+        print('14. Search All Databases')
+        print('//WIP: 15. Display Table')
+        print('16. Quit')
+        
+        choice = input(' Enter choice: ')
+        
+        if choice == '1':
+            create_dataBase()
+
+        if choice == '2':
+            current_database()
+
+        if choice == '3':
+            choose_database()
+
+        if choice == '4':          
+            delete_database()
+
+        if choice == '5':          
+            create_record()
+        
+        elif choice == '6':
+            id = input('Enter ID: ')
+            record = read_record(id)
+            if record:
+                print(record)
+            else:
+                print('Record not found')
+        
+        elif choice == '7':
+            id = input("Enter ID: ")
+            if update_record(id):
+                print("Record updated")
+            else:
+                print("Record not found")
+        
+        elif choice == '8' :
+            id = input("Enter ID: ")
+            if delete_record(id):
+                print('Record deleted')
+            else:
+                print("Record not found")
+      
+        elif choice == '9':
+            list_records()
+        
+        elif choice =='10':
+            listField()
+
+        elif choice == '11':
+            create_databaseCSV()
+
+        elif choice == '12':
+            export_databaseCSV()
+
+        elif choice == '13':
+            record = searchCurrentDatabase()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+
+        elif choice =='14':
+            record = searchThroughAllDatabases()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+        
+      
+        elif choice == '16':
+            break
