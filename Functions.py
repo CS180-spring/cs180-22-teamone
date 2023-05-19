@@ -409,7 +409,8 @@ def displayMenu(users):
         else:
             password = hash_password(input("Password: "))
             security_questions = getSecurityQuestions()
-            users[username] = {'password': password, 'security_questions': security_questions}
+            permissions = 'edit'
+            users[username] = {'password': password, 'security_questions': security_questions, 'permissions': permissions}
             print("User Created!")
             save_users(users)
 
@@ -458,6 +459,23 @@ def validateSecurityQuestions(security_questions):
             return False
     return True
 
+
+def chooseUserPermissions():
+    print("Choose User to change permissions: ")
+    counter = 1
+    with open('users.json', 'r') as file:
+        userList = json.load(file)
+        for user in userList:
+            print(str(counter) + ". " + user)
+            counter += 1
+    username = input("Choose User to change permissions:")
+    print("Choose the permission to change to: ")
+    print("1. Admin")
+    print ("2. Editor")
+    print("3. Viewer")
+    with open('users.json', 'r+') as file:
+        userList = json.load(file)
+    
 def mainMenu():
     while True:
         print('\nMenu')

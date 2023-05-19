@@ -30,6 +30,7 @@ def main():
         print('16. Sort a database')
         print('17. Display Table')
         print("18. Backup Database")
+        print("19. Change User Permissions")
         print('19. Quit')
         
         choice = input(' Enter choice: ')
@@ -114,7 +115,11 @@ def main():
             search_and_backup_json()
    
         elif choice == '19':
+            chooseUserPermissions()
+            
+        else:
             break
+
 
 if __name__ == '__main__':
     main()
