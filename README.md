@@ -41,12 +41,8 @@
     19. Quit
 ## Planned Features
 ---
-    1. Option to have multiple record files
-    2. Search for files
-    3. Delete entire record files
-    4. import and export record files 
-    5. Delete databases
-    6. import/export databases
+    1. Implement GUI
+    
 
 ## Getting Started:
 ---
