@@ -18,25 +18,25 @@
 ## Current Features:
 ---
     Menu
-1. Create a DataBase
-2. Current Database
-3. Choose Database
-4. Delete Database
-5. Create record
-6. Read Record
-7. Update record
-8. Delete record
-9. List records
-10. List by field
-11. Create Database from CSV
-12. Export Current Database to CSV
-13. Search Database
-14. Search All Databases
-15. Search json file using keyword
-16. Sort a database
-17. Display Table
-18. Backup Database
-19. Quit
+    1. Create a DataBase
+    2. Current Database
+    3. Choose Database
+    4. Delete Database
+    5. Create record
+    6. Read Record
+    7. Update record
+    8. Delete record
+    9. List records
+    10. List by field
+    11. Create Database from CSV
+    12. Export Current Database to CSV
+    13. Search Database
+    14. Search All Databases
+    15. Search json file using keyword
+    16. Sort a database
+    17. Display Table
+    18. Backup Database
+    19. Quit
 ## Planned Features
 ---
     1. Option to have multiple record files
