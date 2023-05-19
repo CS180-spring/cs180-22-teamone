@@ -46,8 +46,8 @@ The `main.py` file can act as an entry script. The file can be run in the IDE of
 
 ## Latest Features Added:
 ---
-    1. Create a DataBase: The user now has the ability to create brand new Databases. 
-    2. Current Database: This function will tell the user what databse they are currently inside of. 
-    3. Choose Database: Upon the user creating multiple data bases this function will print all existing database and allow the user to select one of their choosing. 
+    1. Login System: Users can now login to there very own private data base. 
+    2. Back up: If users can now backup there databases onto their desktops.  
+    3. Updated the main menu inorder to make the user experience less intimidating.
 
 
