@@ -36,6 +36,8 @@
     16. Sort a database
     17. Display Table
     18. Backup Database
+    19. Login System
+    20. Backup .json to Users Desktop 
     19. Quit
 ## Planned Features
 ---
