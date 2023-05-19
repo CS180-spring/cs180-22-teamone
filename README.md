@@ -42,6 +42,9 @@
 ## Planned Features
 ---
     1. Implement GUI
+    2. Role Permissions 
+    3. User Restricted Data Bases
+    4. Sharing Feature 
     
 
 ## Getting Started:
