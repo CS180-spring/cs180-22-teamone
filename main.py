@@ -3,11 +3,15 @@ import os
 import shutil
 
 from Functions import *
-#from prettytable import prettytable
 
+users = load_users()
 
 def main():
     while True:
+
+        displayMenu(users)
+        
+=======
         print('\nMenu')
         print('1. Create a DataBase')
         print('2. Current Database')
@@ -115,4 +119,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
