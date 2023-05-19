@@ -1,7 +1,9 @@
 import json
 import os
+import shutil
+
 from Functions import *
-from prettytable import prettytable
+#from prettytable import prettytable
 
 
 def main():
@@ -24,7 +26,8 @@ def main():
         print('15. Search json file using keyword')
         print('16. Sort a database')
         print('17. Display Table')
-        print('18. Quit')
+        print("18. Backup Database")
+        print('19. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -103,8 +106,11 @@ def main():
 
         elif choice == '17':
             display_table()
-      
+
         elif choice == '18':
+            search_and_backup_json()
+   
+        elif choice == '19':
             break
 
 if __name__ == '__main__':

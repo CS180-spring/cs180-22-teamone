@@ -1,7 +1,8 @@
 import csv # import the CSV files
 import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
-from prettytable import prettytable
+import shutil
+#from prettytable import prettytable
 
 
 # One file for now change this to allow for multiple files. 
@@ -381,3 +382,39 @@ def display_table():
         for row in records:
             table.add_row([row.get('id', 'N/A'), row.get('Name', 'N/A'), row.get('Age', 'N/A'), row.get('Major', 'N/A')])
         print(table)
+
+
+def backup_json_files_by_name(input_text):
+    # Search for JSON files that match the name
+    matching_files = []
+    for root, dirs, files in os.walk("/"):  # Provide the starting directory to search from
+        for file in files:
+            if file.endswith(".json") and file.startswith(input_text):
+                matching_files.append(os.path.join(root, file))
+
+    # Back up the matching files to the user's desktop
+    desktop_dir = os.path.expanduser("~/Desktop")
+    for file_path in matching_files:
+        shutil.copy(file_path, desktop_dir)
+
+    # Display a success message
+    print("Backup completed successfully!")
+
+def search_and_backup_json():
+    search_name = input("Enter the name to search for .json file: ")
+    backup_folder = os.path.join(os.path.expanduser("~"), "Desktop", "Backup")
+    os.makedirs(backup_folder, exist_ok=True)
+    found_files = []
+
+    for root, dirs, files in os.walk(os.getcwd()):
+        for file in files:
+            if file.endswith(".json") and search_name.lower() in file.lower():
+                found_files.append(os.path.join(root, file))
+
+    if len(found_files) == 0:
+        print("No matching .json files found.")
+    else:
+        for file_path in found_files:
+            backup_path = os.path.join(backup_folder, os.path.basename(file_path))
+            shutil.copy2(file_path, backup_path)
+            print(f"File '{os.path.basename(file_path)}' backed up to '{backup_path}'.")
