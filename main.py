@@ -11,7 +11,6 @@ def main():
 
         displayMenu(users)
         
-=======
         print('\nMenu')
         print('1. Create a DataBase')
         print('2. Current Database')
