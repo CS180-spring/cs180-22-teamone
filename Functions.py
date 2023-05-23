@@ -1,7 +1,9 @@
 import csv # import the CSV files
 import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
-from prettytable import prettytable
+from prettytable import PrettyTable
+# import hashlib
+import shutil
 
 
 # One file for now change this to allow for multiple files. 
@@ -349,18 +351,18 @@ def sortDatabase():
     with open(userFile, 'w',) as sortedFile:
         json.dump(sortedData, sortedFile, indent=4)
     
-    return AllRecords 
+    return sortedData 
                     
 
 def listField():
     global DB_FILE_NAME
     
     if len(DB_FILE_NAME) == 0:
-        print("Error: No Databse Selected")
+        print("Error: No Database Selected")
         return
     found = False
 
-    print("This functions to show all data on some specfied Field in your Data Base")
+    print("This functions to show all data on some specified Field in your Data Base")
     userInput = input("Insert Field: ")
     
     with open(DB_FILE_NAME, 'r') as file:
@@ -377,7 +379,36 @@ def listField():
 def display_table():
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)
-        table = prettytable(['ID', 'Name', 'Age', 'Major'])
+        table = PrettyTable(['ID', 'Name', 'Age', 'Major'])
         for row in records:
             table.add_row([row.get('id', 'N/A'), row.get('Name', 'N/A'), row.get('Age', 'N/A'), row.get('Major', 'N/A')])
         print(table)
+
+def quit():
+
+    for ba in EXISTING_DATA_BASES:
+        print(ba)
+        
+    with open("ExistingDataBases.txt", 'w') as file:
+        file.truncate()
+
+    EXISTING_DATA_BASES.clear()
+
+def search_and_backup_json():
+    search_name = input("Enter the name to search for .json file: ")
+    backup_folder = os.path.join(os.path.expanduser("~"), "Desktop", "Backup")
+    os.makedirs(backup_folder, exist_ok=True)
+    found_files = []
+
+    for root, dirs, files in os.walk(os.getcwd()):
+        for file in files:
+            if file.endswith(".json") and search_name.lower() in file.lower():
+                found_files.append(os.path.join(root, file))
+
+    if len(found_files) == 0:
+        print("No matching .json files found.")
+    else:
+        for file_path in found_files:
+            backup_path = os.path.join(backup_folder, os.path.basename(file_path))
+            shutil.copy2(file_path, backup_path)
+            print(f"File '{os.path.basename(file_path)}' backed up to '{backup_path}'.")
