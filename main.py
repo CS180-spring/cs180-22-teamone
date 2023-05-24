@@ -1,16 +1,15 @@
 import json
 import os
 import shutil
-
+import tkinter as tk
 from Functions import *
 
 users = load_users()
 
 def main():
-    while True:
 
+    while True:
         displayMenu(users)
-        
         print('\nMenu')
         print('1. Create a DataBase')
         print('2. Current Database')
