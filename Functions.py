@@ -2,7 +2,7 @@ import csv # import the CSV files
 import json  # import the json module to work with JSON data
 import os   # import the os module for operating system dependent functionality
 from prettytable import PrettyTable
-# import hashlib
+import hashlib
 import shutil
 
 
@@ -412,3 +412,37 @@ def search_and_backup_json():
             backup_path = os.path.join(backup_folder, os.path.basename(file_path))
             shutil.copy2(file_path, backup_path)
             print(f"File '{os.path.basename(file_path)}' backed up to '{backup_path}'.")
+
+def hash_password(password):
+    sha_signature = hashlib.sha256(password.encode()).hexdigest()
+    return sha_signature
+
+def save_users(users):
+    with open('users.json', 'w') as f:
+        json.dump(users, f)
+
+def load_users():
+    if os.path.isfile('users.json'):
+        with open('users.json', 'r') as f:
+            users = json.load(f)
+    else:
+        users = {}
+    return users
+
+def getSecurityQuestions():
+    questions = [
+        "Security Question 1: Where were you born?",
+        "Security Question 2: What is your favorite meal?",
+        "Security Question 3: What city did your parents meet?"
+    ]
+    answers = {}
+    for question in questions:
+        answers[question] = input(question + ': ')
+    return answers
+
+def validateSecurityQuestions(security_questions):
+    for question, answer in security_questions.items():
+        user_answer = input(question + ': ')
+        if user_answer != answer:
+            return False
+    return True
