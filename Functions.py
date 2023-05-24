@@ -409,9 +409,16 @@ def displayMenu(users):
 
         if username in users:
             print("\nUsername Already Exists!\n")
+            displayMenu(users)
+           
         else:
-            password = hash_password(input("Password: "))
             email = input("Email: ")
+            for user in users.values():
+                if user['email'] == email:
+                    print("Email Already In Use!\n Please use another\n")
+                    displayMenu(users)
+
+            password = hash_password(input("Password: "))
             security_questions = getSecurityQuestions()
             users[username] = {'password': password, 'security_questions': security_questions, 'email': email}
             print("User Created!")
@@ -440,12 +447,12 @@ def displayMenu(users):
                 data = json.load(file)
             
             if username in data and data[username]['email'] == email:
-                print("Found")
+                print("Account Found")
                 sendRecoveryEmail(email,users,username)
                 displayMenu(users)
                 
             else:
-                print("Not Found\n")
+                print("Account not found,try again\b")
                 displayMenu(users)
 
         # Security Question Password Recovery    
@@ -453,7 +460,7 @@ def displayMenu(users):
              
              if username in users:
                 if validateSecurityQuestions(users[username]['security_questions']):
-                    new_password = hash_password(input("Enter new password: "))
+                    new_password = hash_password(input("Please enter new password: "))
                     users[username]['password'] = new_password
                     print("Password has been reset!")
                     save_users(users)
@@ -462,7 +469,7 @@ def displayMenu(users):
              else:
                 print("\nUser Doesn't Exist\n")
 
-    elif (choice == "4"):
+    elif (choice >= "4"):
         exit()
 
 emailSender = "DataBaseTeamOne@gmail.com"
@@ -475,10 +482,11 @@ def sendRecoveryEmail(emailReciever,users,username):
     randomCode = generateCode()
     #print("Random Code: ",randomCode)
 
-    mainBody = """We received a request to reset your password for your account.
-            If you did not initiate this request, please ignore this email.
-            To reset your password, Type in the randomly generte code in the
-            Data Base Program  
+    mainBody = """
+            We received a request to reset your password for your account.
+            If you did not initiate this request, please ignore this message.
+            To reset your password, type in the randomly generated code in the
+            Data Base Program below.  
              
             Code: """
     
@@ -494,20 +502,20 @@ def sendRecoveryEmail(emailReciever,users,username):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
         smtp.login(emailSender, emailSenderPassword)
         smtp.sendmail(emailSender, emailReciever, em.as_string())
-        print("Sent")
+        print("Recovery Code Sent")
     
     userInput = input("Enter the Recovery Code: ")
     #print("userInput = ", userInput, "and randomCode = ", randomCode)
 
     if(userInput == randomCode):
         print("Match!")
-        new_password = hash_password(input("Enter new password: "))
+        new_password = hash_password(input("Please enter new password: "))
         users[username]['password'] = new_password
         print("Password has been reset!")
         save_users(users)
     
     else:
-        print("Code does not Match")
+        print("Code does not match")
 
     
 def generateCode():
@@ -517,7 +525,6 @@ def generateCode():
     for i in range(10):
         temp = chr(random.randint(start_range, end_range))
         randomCode = randomCode + temp
-    
     return randomCode
 
 def getSecurityQuestions():
