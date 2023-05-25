@@ -17,23 +17,35 @@
   
 ## Current Features:
 ---
+    Menu
     1. Create a DataBase
     2. Current Database
     3. Choose Database
-    4. Create Record
-    5. Read Record
-    6. Update Record
-    7. Delete Record
-    8. List Record
-    9. Quit
+    4. Delete Database
+    5. Create record
+    6. Read Record
+    7. Update record
+    8. Delete record
+    9. List records
+    10. List by field
+    11. Create Database from CSV
+    12. Export Current Database to CSV
+    13. Search Database
+    14. Search All Databases
+    15. Search json file using keyword
+    16. Sort a database
+    17. Display Table
+    18. Backup Database
+    19. Login System
+    20. Backup .json to Users Desktop 
+    19. Quit
 ## Planned Features
 ---
-    1. Option to have multiple record files
-    2. Search for files
-    3. Delete entire record files
-    4. import and export record files 
-    5. Delete databases
-    6. import/export databases
+    1. Implement GUI
+    2. Role Permissions 
+    3. User Restricted Data Bases
+    4. Sharing Feature 
+    
 
 ## Getting Started:
 ---
@@ -41,12 +53,13 @@ The `main.py` file can act as an entry script. The file can be run in the IDE of
 
 ## Burndown Chart: 
 
-![burnchart](https://github.com/CS180-spring/cs180-22-teamone/assets/100899925/58546104-6d1b-413c-a046-7bbffa54ebba)
+![Ideal Tasks Remaining and Actual Tasks Remaining](https://github.com/CS180-spring/cs180-22-teamone/assets/100899925/9900dbe7-2b61-46b7-a53a-0f9694d3a5a9)
+
 
 ## Latest Features Added:
 ---
-    1. Create a DataBase: The user now has the ability to create brand new Databases. 
-    2. Current Database: This function will tell the user what databse they are currently inside of. 
-    3. Choose Database: Upon the user creating multiple data bases this function will print all existing database and allow the user to select one of their choosing. 
+    1. Login System: Users can now login to there very own private data base. 
+    2. Back up: If users can now backup there databases onto their desktops.  
+    3. Updated the main menu inorder to make the user experience less intimidating.
 
 
