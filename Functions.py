@@ -4,14 +4,17 @@ import os   # import the os module for operating system dependent functionality
 from prettytable import PrettyTable
 import hashlib
 import shutil
+import tkinter as tk
+import smtplib
+from email.message import EmailMessage
+import ssl # for protecting sensitive data 
 #from prettytable import prettytable
-
+import getpass
+import random
 
 # One file for now change this to allow for multiple files. 
 DB_FILE_NAME = ''  # define the name of the file where records will be stored
 EXISTING_DATA_BASES = []
-
-
 
 # Function to create records
 def create_record(): # option 5
@@ -401,15 +404,23 @@ def displayMenu(users):
     print("4. Exit")
     choice = input("Please Select your option: ")
 
+   
     if (choice == "1"):
         username = input("Username: ")
-
         if username in users:
             print("\nUsername Already Exists!\n")
+            displayMenu(users)
+           
         else:
+            email = input("Email: ")
+            for user in users.values():
+                if user['email'] == email:
+                    print("Email Already In Use!\n Please use another\n")
+                    displayMenu(users)
+
             password = hash_password(input("Password: "))
             security_questions = getSecurityQuestions()
-            users[username] = {'password': password, 'security_questions': security_questions}
+            users[username] = {'password': password, 'security_questions': security_questions, 'email': email}
             print("User Created!")
             save_users(users)
 
@@ -422,25 +433,103 @@ def displayMenu(users):
             mainMenu()
         else:
             print("\nUser Doesn't Exist // Wrong Password\n")
+            displayMenu(users)
 
     elif (choice == "3"):
-        username = input("Enter Username: ")
-        if username in users:
-            if validateSecurityQuestions(users[username]['security_questions']):
-                new_password = hash_password(input("Enter new password: "))
-                users[username]['password'] = new_password
-                print("Password has been reset!")
-                save_users(users)
+        print("How would you like to recover your password?\n1. Send Pasword Recover via email\n2. Input Security Questions")
+        temp = input()
+        
+        # User wants to Sends Password Recovery 
+        if(temp == "1"):
+            username = input("Enter Username: ")
+            email = input("Enter Email: ").strip()
+            
+            with open('users.json') as file:
+                data = json.load(file)
+            
+            if username in data and data[username]['email'] == email:
+                print("Account Found")
+                sendRecoveryEmail(email,users,username)
+                displayMenu(users)
+                
             else:
-                print("\nSecurity Question Validation Failed!\n")
-        else:
-            print("\nUser Doesn't Exist\n")
+                print("Account not found,try again\b")
+                displayMenu(users)
 
-    elif (choice == "4"):
+        # Security Question Password Recovery    
+        else:
+             username = input("Username: ")
+             if username in users:
+                if validateSecurityQuestions(users[username]['security_questions']):
+                    new_password = hash_password(input("Please enter new password: "))
+                    users[username]['password'] = new_password
+                    print("Password has been reset!")
+                    save_users(users)
+                else:
+                    print("\nSecurity Question Validation Failed!\n")
+             else:
+                print("\nUser Doesn't Exist\n")
+
+    elif (choice >= "4"):
         exit()
 
+emailSender = "DataBaseTeamOne@gmail.com"
+# emailSenderPassword = os.environ.get("EMAIL_PASSWORD")
+emailSenderPassword = "qnajzmjpwjthpzky"
+
+def sendRecoveryEmail(emailReciever,users,username):
+    subject = "Data Base Password Recovery"
+
+    randomCode = generateCode()
+    #print("Random Code: ",randomCode)
+
+    mainBody = """
+            We received a request to reset your password for your account.
+            If you did not initiate this request, please ignore this message.
+            To reset your password, type in the randomly generated code in the
+            Data Base Program below.  
+             
+            Code: """
+    
+    body = mainBody + randomCode
+    
+    em = EmailMessage()  # Create an instance of the class
+    em['From'] = emailSender
+    em['To'] = emailReciever
+    em['Subject'] = subject
+    em.set_content(body)
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
+        smtp.login(emailSender, emailSenderPassword)
+        smtp.sendmail(emailSender, emailReciever, em.as_string())
+        print("Recovery Code Sent")
+    
+    userInput = input("Enter the Recovery Code: ")
+    #print("userInput = ", userInput, "and randomCode = ", randomCode)
+
+    if(userInput == randomCode):
+        print("Match!")
+        new_password = hash_password(input("Please enter new password: "))
+        users[username]['password'] = new_password
+        print("Password has been reset!")
+        save_users(users)
+    
+    else:
+        print("Code does not match")
+
+    
+def generateCode():
+    randomCode = ""
+    start_range = 65
+    end_range = 90    
+    for i in range(10):
+        temp = chr(random.randint(start_range, end_range))
+        randomCode = randomCode + temp
+    return randomCode
 
 def getSecurityQuestions():
+
     questions = [
         "Security Question 1: Where were you born?",
         "Security Question 2: What is your favorite meal?",
