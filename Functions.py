@@ -420,7 +420,7 @@ def displayMenu(users):
 
             password = hash_password(input("Password: "))
             security_questions = getSecurityQuestions()
-            permissions = 'edit'
+            permissions = 'admin'
             users[username] = {'password': password, 'security_questions': security_questions, 'email': email, 'permissions': permissions}
             print("User Created!")
             save_users(users)
