@@ -549,7 +549,7 @@ def validateSecurityQuestions(security_questions):
     return True
 
 
-def chooseUserPermissions():
+def chooseUserPermissions(users):
     print("Choose User to change permissions: ")
     counter = 1
     with open('users.json', 'r') as file:
@@ -562,8 +562,13 @@ def chooseUserPermissions():
     print("1. Admin")
     print ("2. Editor")
     print("3. Viewer")
-    with open('users.json', 'r+') as file:
-        userList = json.load(file)
+    permissionChange = input("Enter a number: ")
+    if(permissionChange == 1):
+        users[username]['permissions'] = "admin"
+    elif (permissionChange == 2):
+        users[username]['permissions'] = "edit"
+    elif (permissionChange == 3):
+        users[username]['permissions'] = "view"
     
 def mainMenu():
     while True:
