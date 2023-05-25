@@ -404,9 +404,9 @@ def displayMenu(users):
     print("4. Exit")
     choice = input("Please Select your option: ")
 
+   
     if (choice == "1"):
         username = input("Username: ")
-
         if username in users:
             print("\nUsername Already Exists!\n")
             displayMenu(users)
@@ -433,6 +433,7 @@ def displayMenu(users):
             mainMenu()
         else:
             print("\nUser Doesn't Exist // Wrong Password\n")
+            displayMenu(users)
 
     elif (choice == "3"):
         print("How would you like to recover your password?\n1. Send Pasword Recover via email\n2. Input Security Questions")
@@ -457,7 +458,7 @@ def displayMenu(users):
 
         # Security Question Password Recovery    
         else:
-             
+             username = input("Username: ")
              if username in users:
                 if validateSecurityQuestions(users[username]['security_questions']):
                     new_password = hash_password(input("Please enter new password: "))
