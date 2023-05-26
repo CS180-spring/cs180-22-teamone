@@ -396,130 +396,6 @@ def load_users():
         users = {}
     return users
 
-def displayMenu(users):
-    print("LOGIN MENU")
-    print("1. Create User\n")
-    print("2. Log In\n")
-    print("3. Reset Password\n")
-    print("4. Exit")
-    choice = input("Please Select your option: ")
-
-   
-    if (choice == "1"):
-        username = input("Username: ")
-        if username in users:
-            print("\nUsername Already Exists!\n")
-            displayMenu(users)
-           
-        else:
-            email = input("Email: ")
-            for user in users.values():
-                if user['email'] == email:
-                    print("Email Already In Use!\n Please use another\n")
-                    displayMenu(users)
-
-            password = hash_password(input("Password: "))
-            security_questions = getSecurityQuestions()
-            permissions = 'admin'
-            users[username] = {'password': password, 'security_questions': security_questions, 'email': email, 'permissions': permissions}
-            print("User Created!")
-            save_users(users)
-
-    elif (choice == "2"):
-        username = input("Enter Username: ")
-        password = hash_password(input("Enter Password: "))
-
-        if username in users and users[username]['password'] == password:
-            print("\nLogin Successful\n")
-            mainMenu()
-        else:
-            print("\nUser Doesn't Exist // Wrong Password\n")
-            displayMenu(users)
-
-    elif (choice == "3"):
-        print("How would you like to recover your password?\n1. Send Pasword Recover via email\n2. Input Security Questions")
-        temp = input()
-        
-        # User wants to Sends Password Recovery 
-        if(temp == "1"):
-            username = input("Enter Username: ")
-            email = input("Enter Email: ").strip()
-            
-            with open('users.json') as file:
-                data = json.load(file)
-            
-            if username in data and data[username]['email'] == email:
-                print("Account Found")
-                sendRecoveryEmail(email,users,username)
-                displayMenu(users)
-                
-            else:
-                print("Account not found,try again\b")
-                displayMenu(users)
-
-        # Security Question Password Recovery    
-        else:
-             username = input("Username: ")
-             if username in users:
-                if validateSecurityQuestions(users[username]['security_questions']):
-                    new_password = hash_password(input("Please enter new password: "))
-                    users[username]['password'] = new_password
-                    print("Password has been reset!")
-                    save_users(users)
-                else:
-                    print("\nSecurity Question Validation Failed!\n")
-             else:
-                print("\nUser Doesn't Exist\n")
-
-    elif (choice >= "4"):
-        exit()
-
-emailSender = "DataBaseTeamOne@gmail.com"
-# emailSenderPassword = os.environ.get("EMAIL_PASSWORD")
-emailSenderPassword = "qnajzmjpwjthpzky"
-
-def sendRecoveryEmail(emailReciever,users,username):
-    subject = "Data Base Password Recovery"
-
-    randomCode = generateCode()
-    #print("Random Code: ",randomCode)
-
-    mainBody = """
-            We received a request to reset your password for your account.
-            If you did not initiate this request, please ignore this message.
-            To reset your password, type in the randomly generated code in the
-            Data Base Program below.  
-             
-            Code: """
-    
-    body = mainBody + randomCode
-    
-    em = EmailMessage()  # Create an instance of the class
-    em['From'] = emailSender
-    em['To'] = emailReciever
-    em['Subject'] = subject
-    em.set_content(body)
-
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
-        smtp.login(emailSender, emailSenderPassword)
-        smtp.sendmail(emailSender, emailReciever, em.as_string())
-        print("Recovery Code Sent")
-    
-    userInput = input("Enter the Recovery Code: ")
-    #print("userInput = ", userInput, "and randomCode = ", randomCode)
-
-    if(userInput == randomCode):
-        print("Match!")
-        new_password = hash_password(input("Please enter new password: "))
-        users[username]['password'] = new_password
-        print("Password has been reset!")
-        save_users(users)
-    
-    else:
-        print("Code does not match")
-
-    
 def generateCode():
     randomCode = ""
     start_range = 65
@@ -551,114 +427,36 @@ def validateSecurityQuestions(security_questions):
 
 def chooseUserPermissions(users):
     print("Choose User to change permissions: ")
-    counter = 1
+    counter = 1 #this is just to list the user numbers
     with open('users.json', 'r') as file:
         userList = json.load(file)
         for user in userList:
             print(str(counter) + ". " + user)
             counter += 1
-    username = input("Choose User to change permissions:")
+        userIndex = input("Type the number of the user to change permissions") #from the list, the developer inputs a number
+        counter = 1
+        for user in userList:
+            if(str(counter) + ". " + user == userIndex + ". " + user): #the number they inputed is compared to the way it was listed out; if it matches, then username will match too
+                username = user
+            counter += 1
+        
     print("Choose the permission to change to: ")
     print("1. Admin")
     print ("2. Editor")
     print("3. Viewer")
-    permissionChange = input("Enter a number: ")
-    if(permissionChange == 1):
+    permissionChange = input("Enter a number: ") #makes the change accordingly
+    if(permissionChange == '1'):
         users[username]['permissions'] = "admin"
-    elif (permissionChange == 2):
+        #print('admin command!')
+    elif (permissionChange == '2'):
         users[username]['permissions'] = "edit"
-    elif (permissionChange == 3):
+        #print('edit command!')
+    elif (permissionChange == '3'):
         users[username]['permissions'] = "view"
-    
-def mainMenu():
-    while True:
-        print('\nMenu')
-        print('1. Create a DataBase')
-        print('2. Current Database')
-        print('3. Choose Database')
-        print('4. Delete Database')
-        print('5. Create record')
-        print('6. Read Record')
-        print('7. Update record')
-        print('8. Delete record')
-        print('9. List records')
-        print ('10. List by field')
-        print('11. Create Database from CSV')
-        print('12. Export Current Database to CSV')
-        print('13. Search Database')
-        print('14. Search All Databases')
-        print('//WIP: 15. Display Table')
-        print('16. Quit')
-        
-        choice = input(' Enter choice: ')
-        
-        if choice == '1':
-            create_dataBase()
+       # print('view command!') for debugging purposes
+    save_users(users)
+    print("Permission successfully changed. Changes will take effect on the user's next login.")
 
-        if choice == '2':
-            current_database()
-
-        if choice == '3':
-            choose_database()
-
-        if choice == '4':          
-            delete_database()
-
-        if choice == '5':          
-            create_record()
-        
-        elif choice == '6':
-            id = input('Enter ID: ')
-            record = read_record(id)
-            if record:
-                print(record)
-            else:
-                print('Record not found')
-        
-        elif choice == '7':
-            id = input("Enter ID: ")
-            if update_record(id):
-                print("Record updated")
-            else:
-                print("Record not found")
-        
-        elif choice == '8' :
-            id = input("Enter ID: ")
-            if delete_record(id):
-                print('Record deleted')
-            else:
-                print("Record not found")
-      
-        elif choice == '9':
-            list_records()
-        
-        elif choice =='10':
-            listField()
-
-        elif choice == '11':
-            create_databaseCSV()
-
-        elif choice == '12':
-            export_databaseCSV()
-
-        elif choice == '13':
-            record = searchCurrentDatabase()
-            if record:
-                print(record)
-            else:
-                print("No Records Found!")
-
-        elif choice =='14':
-            record = searchThroughAllDatabases()
-            if record:
-                print(record)
-            else:
-                print("No Records Found!")
-        
-      
-        elif choice == '16':
-            break
-            
 def display_table():
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)

@@ -1,0 +1,451 @@
+import csv # import the CSV files
+import json  # import the json module to work with JSON data
+import os   # import the os module for operating system dependent functionality
+from prettytable import PrettyTable
+import hashlib
+import shutil
+import tkinter as tk
+import smtplib
+from email.message import EmailMessage
+import ssl # for protecting sensitive data 
+#from prettytable import prettytable
+import getpass
+import random
+from Functions import *
+import main
+users = load_users()
+
+
+def userMenu(users):
+    print("LOGIN MENU")
+    print("1. Create User\n")
+    print("2. Log In\n")
+    print("3. Reset Password\n")
+    print("4. Exit")
+    choice = input("Please Select your option: ")
+
+   
+    if (choice == "1"):
+        username = input("Username: ")
+        if username in users:
+            print("\nUsername Already Exists!\n")
+            userMenu(users)
+           
+        else:
+            email = input("Email: ")
+            for user in users.values():
+                if user['email'] == email:
+                    print("Email Already In Use!\n Please use another\n")
+                    userMenu(users)
+
+            password = hash_password(input("Password: "))
+            security_questions = getSecurityQuestions()
+            permissions = 'admin'
+            users[username] = {'username': username, 'password': password, 'security_questions': security_questions, 'email': email, 'permissions': permissions}
+            print("User Created!")
+            save_users(users)
+
+    elif (choice == "2"):
+        users = load_users() #updates the userMenu every time it is run, in case user permissions were changed.
+        username = input("Enter Username: ")
+        password = hash_password(input("Enter Password: "))
+
+        if username in users and users[username]['password'] == password:
+            print("\nLogin Successful\n")
+            if(users[username]['permissions'] == 'admin'):
+                mainMenu()
+            if(users[username]['permissions'] == 'edit'):
+                editMenu()
+            if(users[username]['permissions'] == 'view'):
+                viewMenu()
+        else:
+            print("\nUser Doesn't Exist // Wrong Password\n")
+            userMenu(users)
+
+    elif (choice == "3"):
+        print("How would you like to recover your password?\n1. Send Pasword Recover via email\n2. Input Security Questions")
+        temp = input()
+        
+        # User wants to Sends Password Recovery 
+        if(temp == "1"):
+            username = input("Enter Username: ")
+            email = input("Enter Email: ").strip()
+            
+            with open('users.json') as file:
+                data = json.load(file)
+            
+            if username in data and data[username]['email'] == email:
+                print("Account Found")
+                sendRecoveryEmail(email,users,username)
+                userMenu(users)
+                
+            else:
+                print("Account not found,try again\b")
+                userMenu(users)
+
+        # Security Question Password Recovery    
+        else:
+             username = input("Username: ")
+             if username in users:
+                if validateSecurityQuestions(users[username]['security_questions']):
+                    new_password = hash_password(input("Please enter new password: "))
+                    users[username]['password'] = new_password
+                    print("Password has been reset!")
+                    save_users(users)
+                else:
+                    print("\nSecurity Question Validation Failed!\n")
+             else:
+                print("\nUser Doesn't Exist\n")
+
+    elif (choice >= "4"):
+        exit()
+
+emailSender = "DataBaseTeamOne@gmail.com"
+# emailSenderPassword = os.environ.get("EMAIL_PASSWORD")
+emailSenderPassword = "qnajzmjpwjthpzky"
+
+def sendRecoveryEmail(emailReciever,users,username):
+    subject = "Data Base Password Recovery"
+
+    randomCode = generateCode()
+    #print("Random Code: ",randomCode)
+
+    mainBody = """
+            We received a request to reset your password for your account.
+            If you did not initiate this request, please ignore this message.
+            To reset your password, type in the randomly generated code in the
+            Data Base Program below.  
+             
+            Code: """
+    
+    body = mainBody + randomCode
+    
+    em = EmailMessage()  # Create an instance of the class
+    em['From'] = emailSender
+    em['To'] = emailReciever
+    em['Subject'] = subject
+    em.set_content(body)
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
+        smtp.login(emailSender, emailSenderPassword)
+        smtp.sendmail(emailSender, emailReciever, em.as_string())
+        print("Recovery Code Sent")
+    
+    userInput = input("Enter the Recovery Code: ")
+    #print("userInput = ", userInput, "and randomCode = ", randomCode)
+
+    if(userInput == randomCode):
+        print("Match!")
+        new_password = hash_password(input("Please enter new password: "))
+        users[username]['password'] = new_password
+        print("Password has been reset!")
+        save_users(users)
+    
+    else:
+        print("Code does not match")
+
+
+
+def mainMenu():
+    while True:
+        print('\nMenu')
+        print('1. Create a DataBase')
+        print('2. Current Database')
+        print('3. Choose Database')
+        print('4. Delete Database')
+        print('5. Create record')
+        print('6. Read Record')
+        print('7. Update record')
+        print('8. Delete record')
+        print('9. List records')
+        print ('10. List by field')
+        print('11. Create Database from CSV')
+        print('12. Export Current Database to CSV')
+        print('13. Search Database')
+        print('14. Search All Databases')
+        print('15. Search json file using keyword')
+        print('16. Sort a database')
+        print('17. Display Table')
+        print("18. Backup Database")
+        print("19. Change User Permissions")
+        print('20. Quit')
+        
+        choice = input(' Enter choice: ')
+        
+        if choice == '1':
+            create_dataBase()
+
+        if choice == '2':
+            current_database()
+
+        if choice == '3':
+            choose_database()
+
+        if choice == '4':          
+            delete_database()
+
+        if choice == '5':          
+            create_record()
+        
+        elif choice == '6':
+            id = input('Enter ID: ')
+            record = read_record(id)
+            if record:
+                print(record)
+            else:
+                print('Record not found')
+        
+        elif choice == '7':
+            id = input("Enter ID: ")
+            if update_record(id):
+                print("Record updated")
+            else:
+                print("Record not found")
+        
+        elif choice == '8' :
+            id = input("Enter ID: ")
+            if delete_record(id):
+                print('Record deleted')
+            else:
+                print("Record not found")
+      
+        elif choice == '9':
+            list_records()
+        
+        elif choice =='10':
+            listField()
+
+        elif choice == '11':
+            create_databaseCSV()
+
+        elif choice == '12':
+            export_databaseCSV()
+
+        elif choice == '13':
+            record = searchCurrentDatabase()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+
+        elif choice =='14':
+            record = searchThroughAllDatabases()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+        
+        elif choice == '15':
+            fileFound = searchJsonFile()
+            if fileFound:
+                print("File found with keyword in:", fileFound)
+            else:
+                print("File not found with keyword, try another.")
+
+        elif choice == '16':
+            sortDatabase()
+
+        elif choice == '17':
+            display_table()
+
+        elif choice == '18':
+            search_and_backup_json()
+   
+        elif choice == '19':
+            chooseUserPermissions(users)
+        elif choice == '20':
+            break
+        else:
+            break
+
+
+
+def editMenu():
+    while True:
+        print('\nMenu')
+        print('1. Create a DataBase')
+        print('2. Current Database')
+        print('3. Choose Database')
+        print('4. Delete Database')
+        print('5. Create record')
+        print('6. Read Record')
+        print('7. Update record')
+        print('8. Delete record')
+        print('9. List records')
+        print ('10. List by field')
+        print('11. Create Database from CSV')
+        print('12. Export Current Database to CSV')
+        print('13. Search Database')
+        print('14. Search All Databases')
+        print('15. Search json file using keyword')
+        print('16. Sort a database')
+        print('17. Display Table')
+        print("18. Backup Database")
+        print('19. Quit')
+        
+        choice = input(' Enter choice: ')
+        
+        if choice == '1':
+            create_dataBase()
+
+        if choice == '2':
+            current_database()
+
+        if choice == '3':
+            choose_database()
+
+        if choice == '4':          
+            delete_database()
+
+        if choice == '5':          
+            create_record()
+        
+        elif choice == '6':
+            id = input('Enter ID: ')
+            record = read_record(id)
+            if record:
+                print(record)
+            else:
+                print('Record not found')
+        
+        elif choice == '7':
+            id = input("Enter ID: ")
+            if update_record(id):
+                print("Record updated")
+            else:
+                print("Record not found")
+        
+        elif choice == '8' :
+            id = input("Enter ID: ")
+            if delete_record(id):
+                print('Record deleted')
+            else:
+                print("Record not found")
+      
+        elif choice == '9':
+            list_records()
+        
+        elif choice =='10':
+            listField()
+
+        elif choice == '11':
+            create_databaseCSV()
+
+        elif choice == '12':
+            export_databaseCSV()
+
+        elif choice == '13':
+            record = searchCurrentDatabase()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+
+        elif choice =='14':
+            record = searchThroughAllDatabases()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+        
+        elif choice == '15':
+            fileFound = searchJsonFile()
+            if fileFound:
+                print("File found with keyword in:", fileFound)
+            else:
+                print("File not found with keyword, try another.")
+
+        elif choice == '16':
+            sortDatabase()
+
+        elif choice == '17':
+            display_table()
+
+        elif choice == '18':
+            search_and_backup_json()
+
+        elif choice == '19':
+            break
+        else:
+            break
+
+
+
+
+def viewMenu():
+    while True:
+        print('\nMenu')
+        print('1. Current Database')
+        print('2. Choose Database')
+        print('3. Read Record')
+        print('4. List records')
+        print('5. List by field')
+        print('6. Export Current Database to CSV')
+        print('7. Search Database')
+        print('8. Search All Databases')
+        print('9. Search json file using keyword')
+        print('10. Sort a database')
+        print('11. Display Table')
+        print("12. Backup Database")
+        print('13. Quit')
+        
+        choice = input(' Enter choice: ')
+        
+    
+        if choice == '1':
+            current_database()
+
+        if choice == '2':
+            choose_database()
+        
+        if choice == '3':
+            id = input('Enter ID: ')
+            record = read_record(id)
+            if record:
+                print(record)
+            else:
+                print('Record not found')
+        if choice == '4':
+            list_records()
+        
+        elif choice =='5':
+            listField()
+
+        elif choice == '6':
+            export_databaseCSV()
+
+        elif choice == '7':
+            record = searchCurrentDatabase()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+
+        elif choice =='8':
+            record = searchThroughAllDatabases()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+        
+        elif choice == '9':
+            fileFound = searchJsonFile()
+            if fileFound:
+                print("File found with keyword in:", fileFound)
+            else:
+                print("File not found with keyword, try another.")
+
+        elif choice == '10':
+            sortDatabase()
+
+        elif choice == '11':
+            display_table()
+
+        elif choice == '12':
+            search_and_backup_json()
+            
+        elif choice == '13':
+            break
+        else:
+            break
