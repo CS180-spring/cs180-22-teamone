@@ -3,13 +3,13 @@ import os
 import shutil
 import tkinter as tk
 from Functions import *
-
+from menus import *
 users = load_users()
-1
 def main():
 
     while True:
-        displayMenu(users)
+        userMenu(users)
+        '''
         print('\nMenu')
         print('1. Create a DataBase')
         print('2. Current Database')
@@ -29,7 +29,8 @@ def main():
         print('16. Sort a database')
         print('17. Display Table')
         print("18. Backup Database")
-        print('19. Quit')
+        print("19. Change User Permissions")
+        print('20. Quit')
         
         choice = input(' Enter choice: ')
         
@@ -113,7 +114,13 @@ def main():
             search_and_backup_json()
    
         elif choice == '19':
+            chooseUserPermissions(users)
+            
+        elif choice == '20':
+            break
+        else:
             break
 
+'''
 if __name__ == '__main__':
     main()
