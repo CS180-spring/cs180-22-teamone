@@ -24,27 +24,10 @@ entry2.pack(pady=12, padx=10)
 button = ctk.CTkButton(master=frame, text="Login")
 button.pack(pady=12, padx=10)
 
+signUpButton = ctk.CTkButton(master=frame, text="Sign Up")
+signUpButton.pack(pady=12, padx=10)
+
 checkbox = ctk.CTkCheckBox(master=frame, text="Remember Me")
 checkbox.pack(pady=12, padx=10)
 
 root.mainloop()
-
-def sign_up_window():
-    sign_up_window = ctk.CTk()
-    sign_up_window.geometry("300x200")
-
-    username_label = ctk.CTkLabel(master=sign_up_window, text="Username")
-    username_label.pack()
-
-    username_entry = ctk.CTkEntry(master=sign_up_window)
-    username_entry.pack()
-
-    password_label = ctk.CTkLabel(master=sign_up_window, text="Password")
-    password_label.pack()
-
-    password_entry = ctk.CTkEntry(master=sign_up_window, show="*")
-    password_entry.pack()
-
-    # Add more widgets and functionality as needed
-
-    sign_up_window.mainloop()
