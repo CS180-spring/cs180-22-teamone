@@ -22,7 +22,6 @@ def SignUp():
     password_entry = ctk.CTkEntry(master=signup_window, show="*")
     password_entry.pack()
 
-    # Add more GUI elements as needed
 
     signup_button = ctk.CTkButton(master=signup_window, text="Sign Up")
     signup_button.pack(pady=10)
