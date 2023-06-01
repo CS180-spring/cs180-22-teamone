@@ -460,7 +460,7 @@ def chooseUserPermissions(users):
 def display_table():
     with open(DB_FILE_NAME, 'r') as file:
         records = json.load(file)
-        table = prettytable(['ID', 'Name', 'Age', 'Major'])
+        table = PrettyTable(['ID', 'Name', 'Age', 'Major'])
         for row in records:
             table.add_row([row.get('id', 'N/A'), row.get('Name', 'N/A'), row.get('Age', 'N/A'), row.get('Major', 'N/A')])
         print(table)
