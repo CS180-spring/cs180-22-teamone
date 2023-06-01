@@ -30,18 +30,28 @@ def SignUp():
     signup_window.mainloop()
 
 
+
+# code for creating the database and GUI 
 def createDatabase():
     print("Creating a Database...")
 
-
+# Code for showiung the current database selected // This can be changed to always show the current database at the top
 def currentDatabase():
     print("Current Database...")
 
-
+# maybe another window showing all the databases they can pick. OR dropdown list of some sort
 def chooseDatabase():
     print("Choose Database...")
+    ## when the pick a database it shows the following options
+    ## Create Record
+    ## Read Record
+    ## Update Record
+    ## Delete Record 
+    ## Also other options such as Search and View Table? 
+    
 
 
+# pick and delete a database gui/code
 def deleteDatabase():
     print("Delete Database...")
 
