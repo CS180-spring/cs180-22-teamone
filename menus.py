@@ -17,12 +17,26 @@ users = load_users()
 
 
 def userMenu(users):
-    print("LOGIN MENU")
-    print("1. Create User\n")
-    print("2. Log In\n")
-    print("3. Reset Password\n")
-    print("x. Exit")
-    choice = input("Please Select your option: ")
+    print( '''
+
+ ██████╗ ███╗   ██ ███████╗    ██████╗██████╗ 
+██╔═══██ ████╗  ██ ██╔════╝    ██╔══██ ██╔══██╗
+██║   ██ ██╔██╗ ██ █████╗      ██║  ██ ██████╔╝
+██║   ██ ██║╚██╗██ ██╔══╝      ██║  ██ ██╔══██╗
+╚██████╔ ██║ ╚████ ███████╗    ██████╔██████╔╝
+ ╚═════╝╚═╝    ╚═══╚══════╝    ╚═════╝╚═════╝ 
+                                            
+
+''')
+    print("╔══════════════════════════════╗")
+    print("║         LOGIN MENU           ║")
+    print("║══════════════════════════════║")
+    print("║ 1. Create User               ║")
+    print("║ 2. Log In                    ║")
+    print("║ 3. Reset Password            ║")
+    print("║ x. Exit                      ║")
+    print("╚══════════════════════════════╝")
+    choice = input("\nPlease Select your option: ")
 
    
     if (choice == "1"):
@@ -98,6 +112,21 @@ def userMenu(users):
                 print("\nUser Doesn't Exist\n")
 
     elif (choice >= "x"):
+        print('''
+                ██████████╗  ██╗ █████╗ ███╗   ██ ██╗  ██╗    ██╗   ██╗██████╗ ██╗   ██╗                          
+                ╚══██╔══██║  ██ ██╔══██ ████╗  ██ ██║ ██╔╝    ╚██╗ ██╔██╔═══██ ██║   ██║                          
+                   ██║  ███████ ███████ ██╔██╗ ██ █████╔╝      ╚████╔╝██║   ██ ██║   ██║                          
+                   ██║  ██╔══██ ██╔══██ ██║╚██╗██ ██╔═██╗       ╚██╔╝ ██║   ██ ██║   ██║                          
+                   ██║  ██║  ██ ██║  ██ ██║ ╚████ ██║  ██╗       ██║  ╚██████╔╚ ██████╔╝                          
+                   ╚═╝  ╚═╝  ╚═ ╚═╝  ╚═ ╚═╝  ╚═══ ╚═╝  ╚═╝       ╚═╝   ╚═════╝ ╚═════╝                           
+███████╗██████╗ ██████╗     ██╗   ██ ███████ ██ ███╗   ██╗ ██████╗      ██████╗ ███╗   ██ ███████╗    ██████╗██████╗ 
+██╔════██╔═══██ ██╔══██╗    ██║   ██ ██╔════ ██ ████╗  ██ ██╔════╝     ██╔═══██ ████╗  ██ ██╔════╝    ██╔══██ ██╔══██╗
+█████╗ ██║   ██ ██████╔╝    ██║   ██ ███████ ██ ██╔██╗ ██ ██║  ███╗    ██║   ██ ██╔██╗ ██ █████╗      ██║  ██ ██████╔╝
+██╔══╝ ██║   ██ ██╔══██╗    ██║   ██ ╚════██ ██ ██║╚██╗██ ██║   ██║    ██║   ██ ██║╚██╗██ ██╔══╝      ██║  ██ ██╔══██╗
+██║    ╚██████╔ ██║  ██║    ╚██████╔ ███████ ██ ██║ ╚████╚ ██████╔╝    ╚██████╔ ██║ ╚████ ███████╗    ██████╔██████╔╝
+╚═╝     ╚═════╝ ╚═╝  ╚═╝     ╚═════╝╚══════╚═╚═╝     ╚═══╝╚═════╝       ╚═════╝ ╚═╝  ╚═══ ╚══════╝    ╚═════╝╚═════╝ 
+                                                                                                              
+''')
         exit()
 
 emailSender = "DataBaseTeamOne@gmail.com"
@@ -148,12 +177,17 @@ def sendRecoveryEmail(emailReciever,users,username):
 
 def databaseMenu():
     while True:
-        print('\nMenu')
-        print('1. Create a DataBase')
-        print('2. Current Database')
-        print('3. Choose Database')
-        print('4. Delete Database')
-        print('x. Log Out')
+        print('''
+╔══════════════════════════════════════╗
+║              Menu                    ║
+║══════════════════════════════════════║ 
+║ 1. Create a DataBase                 ║
+║ 2. Current Database                  ║
+║ 3. Choose Database                   ║
+║ 4. Delete Database                   ║
+║ x. Log Out                           ║
+╚══════════════════════════════════════╝
+    ''')
         
         
         
@@ -183,16 +217,20 @@ def databaseMenu():
 def MoreOptions():
     while True:
         
-        print('12. Create Database from CSV')
-        print('13. Export Current Database to CSV')
-        print('14. Search Database')
-        print('15. Search All Databases')
-        print('16. Search json file using keyword')
-        print('17. Sort a database')
-        print('18. Display Table')
-        print("19. Backup Database")
-        print("20. Change User Permissions")
-        print('x. Back')
+        print('''
+╔══════════════════════════════════════════════════════════╗
+║ 12. Create Database from CSV                             ║
+║ 13. Export Current Database to CSV                       ║
+║ 14. Search Database                                      ║
+║ 15. Search All Databases                                 ║
+║ 16. Search json file using keyword                       ║
+║ 17. Sort a database                                      ║
+║ 18. Display Table                                        ║
+║ 19. Backup Database                                      ║
+║ 20. Change User Permissions                              ║
+║ x. Back                                                  ║
+╚══════════════════════════════════════════════════════════╝
+    ''')
         choice = input(' Enter choice: ')
         
         if choice == '12':
@@ -243,14 +281,18 @@ def MoreOptions():
         
 def crudMenu():
     while True:
-        print('5. Create record')
-        print('6. Read Record')
-        print('7. Update record')
-        print('8. Delete record')
-        print('9. List records')
-        print ('10. List by field')
-        print('11: More Options')
-        print('x: Back')
+        print('''
+╔══════════════════════════════════╗
+║ 5.  Create record                ║
+║ 6.  Read Record                  ║
+║ 7.  Update record                ║
+║ 8.  Delete record                ║
+║ 9.  List records                 ║
+║ 10. List by field                ║
+║ 11. More Options                 ║
+║ x.  Back                         ║
+╚══════════════════════════════════╝
+    ''')
         
         choice = input(' Enter choice: ')
 
@@ -302,26 +344,31 @@ def mainMenu():
 
 def editMenu():
     while True:
-        print('\nMenu')
-        print('1. Create a DataBase')
-        print('2. Current Database')
-        print('3. Choose Database')
-        print('4. Delete Database')
-        print('5. Create record')
-        print('6. Read Record')
-        print('7. Update record')
-        print('8. Delete record')
-        print('9. List records')
-        print ('10. List by field')
-        print('11. Create Database from CSV')
-        print('12. Export Current Database to CSV')
-        print('13. Search Database')
-        print('14. Search All Databases')
-        print('15. Search json file using keyword')
-        print('16. Sort a database')
-        print('17. Display Table')
-        print("18. Backup Database")
-        print('19. Quit')
+        print('''
+╔════════════════════════════════════════════════════════╗
+║                     Menu                               ║
+╠════════════════════════════════════════════════════════╣
+║ 1.  Create a DataBase                                  ║
+║ 2.  Current Database                                   ║
+║ 3.  Choose Database                                    ║
+║ 4.  Delete Database                                    ║
+║ 5.  Create record                                      ║
+║ 6.  Read Record                                        ║
+║ 7.  Update record                                      ║
+║ 8.  Delete record                                      ║
+║ 9.  List records                                       ║
+║ 10. List by field                                      ║
+║ 11. Create Database from CSV                           ║
+║ 12. Export Current Database to CSV                     ║
+║ 13. Search Database                                    ║
+║ 14. Search All Databases                               ║
+║ 15. Search json file using keyword                     ║
+║ 16. Sort a database                                    ║
+║ 17. Display Table                                      ║
+║ 18. Backup Database                                    ║
+║ 19. Quit                                               ║
+╚════════════════════════════════════════════════════════╝
+    ''')
         
         choice = input(' Enter choice: ')
         
@@ -414,20 +461,25 @@ def editMenu():
 
 def viewMenu():
     while True:
-        print('\nMenu')
-        print('1. Current Database')
-        print('2. Choose Database')
-        print('3. Read Record')
-        print('4. List records')
-        print('5. List by field')
-        print('6. Export Current Database to CSV')
-        print('7. Search Database')
-        print('8. Search All Databases')
-        print('9. Search json file using keyword')
-        print('10. Sort a database')
-        print('11. Display Table')
-        print("12. Backup Database")
-        print('13. Quit')
+        print('''
+╔════════════════════════════════════════════════════════╗
+║                     Menu                               ║
+╠════════════════════════════════════════════════════════╣
+║ 1.  Current Database                                   ║
+║ 2.  Choose Database                                    ║
+║ 3.  Read Record                                        ║
+║ 4.  List records                                       ║
+║ 5.  List by field                                      ║
+║ 6.  Export Current Database to CSV                     ║
+║ 7.  Search Database                                    ║
+║ 8.  Search All Databases                               ║
+║ 9.  Search json file using keyword                     ║
+║ 10. Sort a database                                    ║
+║ 11. Display Table                                      ║
+║ 12. Backup Database                                    ║
+║ 13. Quit                                               ║
+╚════════════════════════════════════════════════════════╝
+    ''')
         
         choice = input(' Enter choice: ')
         
