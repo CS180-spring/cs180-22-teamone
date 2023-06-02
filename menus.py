@@ -21,7 +21,7 @@ def userMenu(users):
     print("1. Create User\n")
     print("2. Log In\n")
     print("3. Reset Password\n")
-    print("4. Exit")
+    print("x. Exit")
     choice = input("Please Select your option: ")
 
    
@@ -97,7 +97,7 @@ def userMenu(users):
              else:
                 print("\nUser Doesn't Exist\n")
 
-    elif (choice >= "4"):
+    elif (choice >= "x"):
         exit()
 
 emailSender = "DataBaseTeamOne@gmail.com"
@@ -146,32 +146,19 @@ def sendRecoveryEmail(emailReciever,users,username):
         print("Code does not match")
 
 
-
-def mainMenu():
+def databaseMenu():
     while True:
         print('\nMenu')
         print('1. Create a DataBase')
         print('2. Current Database')
         print('3. Choose Database')
         print('4. Delete Database')
-        print('5. Create record')
-        print('6. Read Record')
-        print('7. Update record')
-        print('8. Delete record')
-        print('9. List records')
-        print ('10. List by field')
-        print('11. Create Database from CSV')
-        print('12. Export Current Database to CSV')
-        print('13. Search Database')
-        print('14. Search All Databases')
-        print('15. Search json file using keyword')
-        print('16. Sort a database')
-        print('17. Display Table')
-        print("18. Backup Database")
-        print("19. Change User Permissions")
-        print('20. Quit')
+        print('x. Log Out')
+        
+        
         
         choice = input(' Enter choice: ')
+        
         
         if choice == '1':
             create_dataBase()
@@ -180,10 +167,92 @@ def mainMenu():
             current_database()
 
         if choice == '3':
+            
             choose_database()
+            
+            crudMenu()
+            
 
         if choice == '4':          
             delete_database()
+        
+        if choice == 'x':
+            break
+        
+        
+def MoreOptions():
+    while True:
+        
+        print('12. Create Database from CSV')
+        print('13. Export Current Database to CSV')
+        print('14. Search Database')
+        print('15. Search All Databases')
+        print('16. Search json file using keyword')
+        print('17. Sort a database')
+        print('18. Display Table')
+        print("19. Backup Database")
+        print("20. Change User Permissions")
+        print('x. Back')
+        choice = input(' Enter choice: ')
+        
+        if choice == '12':
+            create_databaseCSV()
+            
+        
+        elif choice == '13':
+            export_databaseCSV()
+        elif choice == '14':
+            record = searchCurrentDatabase()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+
+        elif choice =='15':
+            record = searchThroughAllDatabases()
+            if record:
+                print(record)
+            else:
+                print("No Records Found!")
+        
+        elif choice == '16':
+            fileFound = searchJsonFile()
+            if fileFound:
+                print("File found with keyword in:", fileFound)
+            else:
+                print("File not found with keyword, try another.")
+
+        elif choice == '17':
+            sortDatabase()
+
+        elif choice == '18':
+            display_table()
+
+        elif choice == '19':
+            search_and_backup_json()
+   
+        elif choice == '20':
+            chooseUserPermissions(users)
+        elif choice == 'x':
+            break
+        else:
+            break
+        
+        
+        
+        
+def crudMenu():
+    while True:
+        print('5. Create record')
+        print('6. Read Record')
+        print('7. Update record')
+        print('8. Delete record')
+        print('9. List records')
+        print ('10. List by field')
+        print('11: More Options')
+        print('x: Back')
+        
+        choice = input(' Enter choice: ')
 
         if choice == '5':          
             create_record()
@@ -209,55 +278,25 @@ def mainMenu():
                 print('Record deleted')
             else:
                 print("Record not found")
-      
         elif choice == '9':
             list_records()
         
         elif choice =='10':
             listField()
-
-        elif choice == '11':
-            create_databaseCSV()
-
-        elif choice == '12':
-            export_databaseCSV()
-
-        elif choice == '13':
-            record = searchCurrentDatabase()
-            if record:
-                print(record)
-            else:
-                print("No Records Found!")
-
-        elif choice =='14':
-            record = searchThroughAllDatabases()
-            if record:
-                print(record)
-            else:
-                print("No Records Found!")
         
-        elif choice == '15':
-            fileFound = searchJsonFile()
-            if fileFound:
-                print("File found with keyword in:", fileFound)
-            else:
-                print("File not found with keyword, try another.")
-
-        elif choice == '16':
-            sortDatabase()
-
-        elif choice == '17':
-            display_table()
-
-        elif choice == '18':
-            search_and_backup_json()
-   
-        elif choice == '19':
-            chooseUserPermissions(users)
-        elif choice == '20':
+        elif choice == '11':
+            MoreOptions()
+        elif choice == 'x':
             break
-        else:
-            break
+    
+
+
+        
+        
+
+
+def mainMenu():
+        databaseMenu()
 
 
 
