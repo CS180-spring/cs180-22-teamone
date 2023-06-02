@@ -434,6 +434,15 @@ def chooseUserPermissions(users):
             print(str(counter) + ". " + user)
             counter += 1
         userIndex = input("Type the number of the user to change permissions") #from the list, the developer inputs a number
+
+        try: 
+            number = int(userIndex)
+        except ValueError:
+            userIndex = input("Please input an Integer value.")
+            
+        if(int(userIndex) > len(userList)):
+            userIndex = input("Please choose a valid user. Enter an Integer value.")
+        
         counter = 1
         for user in userList:
             if(str(counter) + ". " + user == userIndex + ". " + user): #the number they inputed is compared to the way it was listed out; if it matches, then username will match too
@@ -447,15 +456,20 @@ def chooseUserPermissions(users):
     permissionChange = input("Enter a number: ") #makes the change accordingly
     if(permissionChange == '1'):
         users[username]['permissions'] = "admin"
+        print("Permission successfully changed. Changes will take effect on the user's next login.")
         #print('admin command!')
     elif (permissionChange == '2'):
         users[username]['permissions'] = "edit"
+        print("Permission successfully changed. Changes will take effect on the user's next login.")
         #print('edit command!')
     elif (permissionChange == '3'):
         users[username]['permissions'] = "view"
+        print("Permission successfully changed. Changes will take effect on the user's next login.")
        # print('view command!') for debugging purposes
+    else:
+        print("Error. Invalid Number inputted.")
     save_users(users)
-    print("Permission successfully changed. Changes will take effect on the user's next login.")
+   
 
 def display_table():
     with open(DB_FILE_NAME, 'r') as file:
