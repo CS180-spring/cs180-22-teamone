@@ -185,6 +185,7 @@ def databaseMenu():
 ║ 2. Current Database                  ║
 ║ 3. Choose Database                   ║
 ║ 4. Delete Database                   ║
+║ 5. More Options
 ║ x. Log Out                           ║
 ╚══════════════════════════════════════╝
     ''')
@@ -209,6 +210,9 @@ def databaseMenu():
 
         if choice == '4':          
             delete_database()
+        
+        if choice == '5':
+            MoreOptions()
         
         if choice == 'x':
             break
